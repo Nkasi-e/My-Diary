@@ -12,10 +12,6 @@ const port = process.env.PORT;
 
 app.use("/api/diary", userRoute);
 
-app.get("/", (req, res) => {
-  res.send("welcome express");
-});
-
 app.listen(port, () => {
   console.log(`server is running on port ${port}...`);
 });

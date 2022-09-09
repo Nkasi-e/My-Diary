@@ -1,9 +1,20 @@
+const { database } = require("../db/database");
+
 const getEntries = async (req, res) => {
-  res.json({ msg: `get users entries` });
+  const user = database.user;
+
+  res.json({ user, nbHit: user.length });
 };
 
 const postEntries = async (req, res) => {
-  res.json({ msg: `Post user entries` });
+  const { name, email, password } = req.body;
+  database.user.push({
+    name,
+    email,
+    password,
+    date: new Date(),
+  });
+  res.json(database.user[database.user.length - 1]);
 };
 
 module.exports = {
