@@ -28,8 +28,18 @@ const viewAllEntries = (req, res) => {
 };
 
 //Getting a single diary entry
+const viewSingleEntry = (req, res) => {
+  const { id } = req.params;
+  pool.query(getSingleEntry, [id], (err, result) => {
+    if (!result.rows.length) {
+      return res.status(400).send(`No diary entry with ID ${id}`);
+    }
+    res.json(result.rows);
+  });
+};
 
 module.exports = {
   viewAllEntries,
   postEntries,
+  viewSingleEntry,
 };
