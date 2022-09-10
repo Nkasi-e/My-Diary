@@ -1,14 +1,19 @@
 //getting all users from  the database
-const getAllUsers = "SELECT * FROM users";
-
-//Registering users into the database
-const registerUsers = "INSERT INTO users";
+const getAllEntries = "SELECT * FROM record";
 
 //Getting a single user from the database
-const getSingleUser = "SELECT * FROM users WHERE id = $1";
+const getSingleEntry = "SELECT * FROM record WHERE id = $1";
+
+//Checking if email already exist
+const existingEmail = "SELECT s FROM users s WHERE s.email = $1";
+
+//Registering users into the database
+const registerEntry =
+  "INSERT INTO record (title, description, date) VALUES($1, $2, $3)";
 
 module.exports = {
-  getAllUsers,
-  registerUsers,
-  getSingleUser,
+  getAllEntries,
+  registerEntry,
+  getSingleEntry,
+  existingEmail,
 };

@@ -1,31 +1,35 @@
 const { database } = require("../db/database");
 const pool = require("../db/db");
 const {
-  getAllUsers,
-  registerUsers,
-  getSingleUser,
+  getAllEntries,
+  registerEntry,
+  getSingleEntry,
 } = require("../utils/queries");
 
-//Get all users entries
-const getEntries = async (req, res) => {
-  await pool.query(getAllUsers, (err, result) => {
-    if (err) throw Error;
+//Creating diary entries
+const postEntries = (req, res) => {
+  const { title, description, date } = req.body;
+  pool.query(registerEntry, [title, description, date], (err, result) => {
+    if (err) {
+      throw err;
+    }
+    res.status(201).json("Entry Successful");
+  });
+};
+
+//Get all diary entries
+const viewAllEntries = (req, res) => {
+  pool.query(getAllEntries, (err, result) => {
+    if (err) {
+      throw err;
+    }
     res.json(result.rows);
   });
 };
 
-const postEntries = async (req, res) => {
-  const { name, email, password } = req.body;
-  database.user.push({
-    name,
-    email,
-    password,
-    date: new Date(),
-  });
-  res.json(database.user[database.user.length - 1]);
-};
+//Getting a single diary entry
 
 module.exports = {
-  getEntries,
+  viewAllEntries,
   postEntries,
 };
