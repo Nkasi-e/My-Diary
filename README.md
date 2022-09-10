@@ -7,9 +7,9 @@
 - [x] Users can create diary entries.
 - [x] Users can read all diary entries in the database.
 - [x] Users can read a specific diary entry by ID from the database.
-- [] Users can update diary entries.
-- [] Users can create an account and login.
-- [] Users can delete diary entries.
+- [ ] Users can update diary entries.
+- [ ] Users can create an account and login.
+- [ ] Users can delete diary entries.
 
 - Note: The unchecked box means those particular feature are not ready yet but still under production or building.
 - More features may still be added to the `Diary API` as an update, until it is fully ready.
