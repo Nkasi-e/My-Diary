@@ -10,7 +10,7 @@ app.use(express.json());
 
 const port = process.env.PORT;
 
-app.use("/api/diary", userRoute);
+app.use("/api/v1/diary", userRoute);
 
 app.listen(port, () => {
   console.log(`server is running on port ${port}...`);
