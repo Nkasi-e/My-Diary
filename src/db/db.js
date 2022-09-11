@@ -1,4 +1,5 @@
 const Pool = require("pg").Pool;
+const Joi = require("joi");
 
 const pool = new Pool({
   user: "postgres",
@@ -8,4 +9,16 @@ const pool = new Pool({
   port: 5432,
 });
 
-module.exports = pool;
+const validateEntry = (user) => {
+  const schema = Joi.object({
+    title: Joi.string().min(3).max(500).required(),
+    description: Joi.string().min(5).max(700).required(),
+    date: Joi.string().min(3).max(100).required(),
+  });
+  return schema.validate(user);
+};
+
+module.exports = {
+  pool,
+  validateEntry,
+};

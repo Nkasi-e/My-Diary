@@ -1,5 +1,5 @@
 const { database } = require("../db/database");
-const pool = require("../db/db");
+const { pool } = require("../db/db");
 const {
   getAllEntries,
   registerEntry,
