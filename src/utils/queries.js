@@ -11,6 +11,9 @@ const existingEmail = "SELECT s FROM users s WHERE s.email = $1";
 const registerEntry =
   "INSERT INTO record (title, description, date) VALUES($1, $2, $3)";
 
+//Update Entry
+const UpdateEntry = "UPDATE record SET description = $1 WHERE id = $2  ";
+
 //Deleting Users
 const removeEntry = "DELETE FROM record WHERE id = $1";
 
@@ -20,4 +23,5 @@ module.exports = {
   getSingleEntry,
   existingEmail,
   removeEntry,
+  UpdateEntry,
 };
