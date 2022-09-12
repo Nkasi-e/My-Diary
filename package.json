@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/app.js",
-    "dev": "env-cmd -f ./config/.env nodemon src/app.js"
+    "dev": "env-cmd -f ./config/.env nodemon src/app.js",
+    "test": "mocha"
   },
   "keywords": [],
   "author": "",
@@ -21,5 +22,10 @@
     "jsonwebtoken": "^8.5.1",
     "knex": "^2.3.0",
     "pg": "^8.8.0"
+  },
+  "devDependencies": {
+    "chai": "^4.3.6",
+    "chai-http": "^4.3.0",
+    "mocha": "^10.0.0"
   }
 }

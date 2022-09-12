@@ -2,9 +2,9 @@ const Pool = require("pg").Pool;
 const Joi = require("joi");
 
 const pool = new Pool({
-  user: "postgres",
+  user: process.env.DB_USER,
   host: "127.0.0.1",
-  database: "mydiary",
+  database: process.env.DATABASE,
   password: process.env.DB_SECRET,
   port: 5432,
 });
