@@ -4,6 +4,7 @@ const {
   getAllEntries,
   registerEntry,
   getSingleEntry,
+  removeEntry,
 } = require("../utils/queries");
 
 //Creating diary entries
@@ -38,8 +39,22 @@ const viewSingleEntry = (req, res) => {
   });
 };
 
+//Delete a single Diary Entry
+const deleteEntry = (req, res) => {
+  const { id } = req.params;
+  pool.query(removeEntry, [id], (err, result) => {
+    console.log(result);
+    if (result.rowCount <= 0) {
+      return res.status(404).json(`Invalid request, entry does not exit`);
+    } else {
+      res.send(`Diary with ID No. ${id} successfully deleted`);
+    }
+  });
+};
+
 module.exports = {
   viewAllEntries,
   postEntries,
   viewSingleEntry,
+  deleteEntry,
 };
