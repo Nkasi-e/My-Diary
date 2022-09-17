@@ -25,8 +25,8 @@ API documentation:
 
 > The purpose of this API is to allow users to create, read, and manage whatever is in their diary log. This helps users to keep their thought organized and make them apprehensible digitally.
 
-Pivotal tracker was used for the management of this project.
-[https://www.pivotaltracker.com/projects/2590691]
+> Pivotal tracker was used for the management of this project.
+> [https://www.pivotaltracker.com/projects/2590691]
 
 ## Getting Started
 

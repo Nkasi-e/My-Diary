@@ -1,13 +1,13 @@
 const Pool = require("pg").Pool;
 const Joi = require("joi");
 
-const pool = new Pool({
-  user: process.env.DB_USER,
-  host: "127.0.0.1",
-  database: process.env.DATABASE,
-  password: process.env.DB_SECRET,
-  port: 5432,
-});
+// const pool = new Pool({
+//   user: process.env.DB_USER,
+//   host: "127.0.0.1",
+//   database: process.env.DATABASE,
+//   password: process.env.DB_SECRET,
+//   port: 5432,
+// });
 
 const validateEntry = (user) => {
   const schema = Joi.object({
