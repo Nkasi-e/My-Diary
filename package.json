@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/app.js",
-    "dev": "env-cmd -f ./config/.env nodemon src/app.js",
+    "dev": "env-cmd -f ./env/.env nodemon src/app.js",
     "test": "mocha"
   },
   "keywords": [],
