@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { validateEntry } = require("../db/db");
+const { validateEntry } = require("../middleware/validation");
 const validatorMiddleware = require("../middleware/validatorMiddleware");
 
 const {
@@ -8,7 +8,7 @@ const {
   viewSingleEntry,
   deleteEntry,
   modifyEntry,
-} = require("../controller/user");
+} = require("../controller/entry");
 
 const router = Router();
 
