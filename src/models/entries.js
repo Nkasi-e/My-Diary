@@ -1,17 +1,17 @@
 const { Sequelize, DataTypes } = require("Sequelize");
-const sequelize = require("../connfig/config");
+const db = require("../connfig/config");
 
-const Entry = sequelize.define("entry", {
+const Entry = db.define("entry", {
   title: {
-    type: DataTypes.STRING,
+    type: Sequelize.STRING,
     allowNull: false,
   },
   body: {
-    type: DataTypes.STRING,
+    type: Sequelize.STRING,
     allowNull: false,
   },
   date: {
-    type: DataTypes.DATE,
+    type: Sequelize.DATE,
     allowNull: false,
   },
 });

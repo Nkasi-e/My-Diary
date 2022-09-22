@@ -3,6 +3,7 @@ const Entry = require("../models/entries");
 //Creating diary entries
 const postEntries = async (req, res) => {
   const { title, body, date } = req.body;
+
   try {
     const data = await Entry.create({ title, body, date });
     res.status(201).json({ message: `Diary entry created successfully`, data });
@@ -15,7 +16,9 @@ const postEntries = async (req, res) => {
 };
 
 //Get all diary entries
-const viewAllEntries = (req, res) => {};
+const viewAllEntries = async (req, res) => {
+  // res.json(data);
+};
 
 //Getting a single diary entry
 const viewSingleEntry = (req, res) => {};
