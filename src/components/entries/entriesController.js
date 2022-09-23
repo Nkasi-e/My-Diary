@@ -28,10 +28,44 @@ const viewAllEntries = async (req, res) => {
 };
 
 //Getting a single diary entry
-const viewSingleEntry = (req, res) => {};
+const viewSingleEntry = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const data = await Record.findByPk(id);
+    if (data === null) {
+      return res.status(404).json({ message: `Entry with id ${id} not found` });
+    }
+    res.json({ message: `Entry found`, data: data });
+  } catch (error) {
+    res.status(500).json({
+      message: `Error occurred. Please try again later`,
+      error: error.message,
+    });
+  }
+};
 
 //Update entry
-const modifyEntry = (req, res) => {};
+const modifyEntry = async (req, res) => {
+  const { id } = req.params;
+  const { title, body, date } = req.body;
+  try {
+    const data = await Record.findOne({ where: { id } });
+    if (data === null) {
+      return res
+        .status(404)
+        .json({ message: `Invalid entry ID ${id}. Entry not found` });
+    }
+    await Record.update({ title, body, date }, { where: { id } });
+    res.json({
+      message: `Entry with ID number ${id} updated successfully`,
+      data: res.body,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: `Updating entry failed`, error: error.message });
+  }
+};
 
 //Delete a single Diary Entry
 const deleteEntry = (req, res) => {};
