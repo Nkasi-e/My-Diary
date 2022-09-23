@@ -8,7 +8,7 @@ const {
   viewSingleEntry,
   deleteEntry,
   modifyEntry,
-} = require("../controller/entry");
+} = require("./entriesController");
 
 const router = Router();
 

@@ -6,7 +6,7 @@ const cors = require("cors");
 const DB = require("./config/config");
 
 //Routers
-const entryRoute = require("./routes/entry");
+const entryRoute = require("./entries/entriesRoute");
 
 const app = express();
 
@@ -16,12 +16,6 @@ app.use(cors());
 const port = process.env.PORT;
 
 app.use("/api/v1/diary", entryRoute);
-
-// DB.authenticate()
-//   .then(() => console.log(`DB connected successfully`))
-//   .catch((error) =>
-//     console.log("Error Connecting to Database " + error.message)
-//   );
 
 app.listen(port, async () => {
   console.log(`server is running on port ${port}...`);
