@@ -3,7 +3,7 @@ require("dotenv").config();
 const cors = require("cors");
 
 //Database
-const DB = require("./connfig/config");
+const DB = require("./config/config");
 
 //Routers
 const entryRoute = require("./routes/entry");
@@ -17,12 +17,14 @@ const port = process.env.PORT;
 
 app.use("/api/v1/diary", entryRoute);
 
-DB.authenticate()
-  .then(() => console.log(`DB connected successfully`))
-  .catch((error) =>
-    console.log("Error Connecting to Database " + error.message)
-  );
+// DB.authenticate()
+//   .then(() => console.log(`DB connected successfully`))
+//   .catch((error) =>
+//     console.log("Error Connecting to Database " + error.message)
+//   );
 
-app.listen(port, () => {
+app.listen(port, async () => {
   console.log(`server is running on port ${port}...`);
+  await DB.authenticate();
+  console.log(`DB connected successfully`);
 });
