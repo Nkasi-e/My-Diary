@@ -5,7 +5,9 @@ const postEntries = async (req, res) => {
   const { title, body, date } = req.body;
   try {
     const data = await Record.create({ title, body, date });
-    res.status(201).json({ message: `Diary entry created successfully`, data });
+    res
+      .status(201)
+      .json({ message: `Diary entry created successfully`, Entry: data });
   } catch (e) {
     res.status(500).json({
       message: `Unable to create diary entry ${title},`,
@@ -18,13 +20,12 @@ const postEntries = async (req, res) => {
 const viewAllEntries = async (req, res) => {
   try {
     const data = await Record.findAll();
-    res.json({ message: `All Entries`, data });
+    res.json({ message: `All Entries`, Entries: data });
   } catch (e) {
     res
       .status(404)
       .json({ message: `Unable to get Entries`, error: e.message });
   }
-  // res.json(data);
 };
 
 //Getting a single diary entry
@@ -35,7 +36,7 @@ const viewSingleEntry = async (req, res) => {
     if (data === null) {
       return res.status(404).json({ message: `Entry with id ${id} not found` });
     }
-    res.json({ message: `Entry found`, data: data });
+    res.json({ message: `Entry found`, entry: data });
   } catch (error) {
     res.status(500).json({
       message: `Error occurred. Please try again later`,
@@ -58,7 +59,7 @@ const modifyEntry = async (req, res) => {
     await Record.update({ title, body, date }, { where: { id } });
     res.json({
       message: `Entry with ID number ${id} updated successfully`,
-      data: res.body,
+      data: data,
     });
   } catch (error) {
     res
@@ -68,7 +69,19 @@ const modifyEntry = async (req, res) => {
 };
 
 //Delete a single Diary Entry
-const deleteEntry = (req, res) => {};
+const deleteEntry = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const data = await Record.findOne({ where: { id } });
+    if (!data) {
+      return res.status(400).json({ message: `Invalid entry` });
+    }
+    await data.destroy();
+    res.json({ message: `Successfully deleted entry`, entry: data });
+  } catch (err) {
+    res.status(500).json({ message: `Deleting failed`, error: err.message });
+  }
+};
 
 module.exports = {
   viewAllEntries,
