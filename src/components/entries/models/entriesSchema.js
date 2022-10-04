@@ -1,8 +1,8 @@
-const { Sequelize, DataTypes } = require("Sequelize");
-const db = require("../../config/config");
+const { Sequelize } = require('Sequelize');
+const db = require('../../config/config');
 
 const Record = db.define(
-  "records",
+  'records',
   {
     title: {
       type: Sequelize.STRING,

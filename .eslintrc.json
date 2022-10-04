@@ -1,0 +1,24 @@
+{
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es2021": true,
+    "node": true,
+    "es6": true
+  },
+  "extends": ["airbnb", "prettier", "plugin:node/recommended"],
+  "plugins": ["prettier"],
+  "rules": {
+    "no-unused-vars": "warn",
+    "no-console": "off",
+    "consistent-return": "off",
+    "arrow-body-style": "off",
+    "import/no-unresolved": [0, { "commonjs": true }],
+    "no-param-reassign": "off",
+    "func-names": 0,
+    "node/no-extraneous-require": 0,
+    "no-process-exit": 1,
+    "object-shorthand": "off",
+    "class-methods-use-this": "off"
+  }
+}

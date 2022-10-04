@@ -1,6 +1,6 @@
-const { Record } = require("./models/entriesSchema");
+const { Record } = require('./models/entriesSchema');
 
-//Creating diary entries
+// Creating diary entries
 const postEntries = async (req, res) => {
   const { title, body, date } = req.body;
   try {
@@ -16,7 +16,7 @@ const postEntries = async (req, res) => {
   }
 };
 
-//Get all diary entries
+// Get all diary entries
 const viewAllEntries = async (req, res) => {
   try {
     const data = await Record.findAll();
@@ -28,7 +28,7 @@ const viewAllEntries = async (req, res) => {
   }
 };
 
-//Getting a single diary entry
+// Getting a single diary entry
 const viewSingleEntry = async (req, res) => {
   const { id } = req.params;
   try {
@@ -45,7 +45,7 @@ const viewSingleEntry = async (req, res) => {
   }
 };
 
-//Update entry
+// Update entry
 const modifyEntry = async (req, res) => {
   const { id } = req.params;
   const { title, body, date } = req.body;
@@ -59,7 +59,7 @@ const modifyEntry = async (req, res) => {
     await Record.update({ title, body, date }, { where: { id } });
     res.json({
       message: `Entry with ID number ${id} updated successfully`,
-      data: data,
+      data,
     });
   } catch (error) {
     res
@@ -68,7 +68,7 @@ const modifyEntry = async (req, res) => {
   }
 };
 
-//Delete a single Diary Entry
+// Delete a single Diary Entry
 const deleteEntry = async (req, res) => {
   const { id } = req.params;
   try {

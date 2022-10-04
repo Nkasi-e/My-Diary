@@ -1,6 +1,6 @@
-const { Router } = require("express");
-const { validateEntry } = require("../middleware/validation");
-const validatorMiddleware = require("../middleware/validatorMiddleware");
+const { Router } = require('express');
+const { validateEntry } = require('../middleware/validation');
+const validatorMiddleware = require('../middleware/validatorMiddleware');
 
 const {
   viewAllEntries,
@@ -8,16 +8,16 @@ const {
   viewSingleEntry,
   deleteEntry,
   modifyEntry,
-} = require("./entriesController");
+} = require('./entriesController');
 
 const router = Router();
 
 router
-  .route("/")
+  .route('/')
   .get(viewAllEntries)
   .post([validatorMiddleware(validateEntry)], postEntries);
 router
-  .route("/:id")
+  .route('/:id')
   .get(viewSingleEntry)
   .delete(deleteEntry)
   .patch(modifyEntry);
