@@ -1,6 +1,16 @@
 const express = require('express');
 require('dotenv').config();
+
+// extra security
 const cors = require('cors');
+const helmet = require('helmet');
+const xss = require('xss-clean');
+
+// Swagger
+const swaggerUI = require('swagger-ui-express');
+const YAML = require('yamljs');
+
+const swaggerDocument = YAML.load('./swagger.yaml');
 
 // Database
 const DB = require('./config/config');
@@ -12,6 +22,15 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
+app.use(helmet());
+app.use(xss());
+
+app.get('/', (req, res) => {
+  res.send('<h1>DIARY API</h1><a href="/api-docs">Documentation</a>');
+});
+
+// swagger
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 const port = process.env.PORT;
 
