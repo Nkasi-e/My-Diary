@@ -1,14 +1,22 @@
-const { Sequelize } = require('Sequelize');
+const { Sequelize } = require('sequelize');
 const db = require('../../config/config');
 
-const Record = db.define(
-  'records',
+const User = db.define(
+  'user',
   {
-    title: {
+    name: {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    body: {
+    email: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        isEmail: true,
+      },
+    },
+    password: {
       type: Sequelize.STRING,
       allowNull: false,
     },
@@ -24,5 +32,5 @@ const Record = db.define(
 );
 
 module.exports = {
-  Record,
+  User,
 };

@@ -4,7 +4,7 @@ const validatorMiddleware = require('../middleware/validatorMiddleware');
 
 const {
   viewAllEntries,
-  postEntries,
+  postEntry,
   viewSingleEntry,
   deleteEntry,
   modifyEntry,
@@ -15,11 +15,11 @@ const router = Router();
 router
   .route('/')
   .get(viewAllEntries)
-  .post([validatorMiddleware(validateEntry)], postEntries);
+  .post([validatorMiddleware(validateEntry)], postEntry);
 router
   .route('/:id')
   .get(viewSingleEntry)
   .delete(deleteEntry)
-  .patch(modifyEntry);
+  .patch([validatorMiddleware(validateEntry)], modifyEntry);
 
 module.exports = router;

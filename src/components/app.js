@@ -1,12 +1,8 @@
 const express = require('express');
 require('dotenv').config();
-
-// extra security
 const cors = require('cors');
 const helmet = require('helmet');
 const xss = require('xss-clean');
-
-// Swagger
 const swaggerUI = require('swagger-ui-express');
 const YAML = require('yamljs');
 
@@ -17,6 +13,7 @@ const DB = require('./config/config');
 
 // Routers
 const entryRoute = require('./entries/entriesRoute');
+const userRoute = require('./users/userRoute');
 
 const app = express();
 
@@ -25,7 +22,7 @@ app.use(cors());
 app.use(helmet());
 app.use(xss());
 
-app.get('/', (req, res) => {
+app.get('/swagger', (req, res) => {
   res.send('<h1>DIARY API</h1><a href="/api-docs">Documentation</a>');
 });
 
@@ -35,6 +32,7 @@ app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 const port = process.env.PORT;
 
 app.use('/api/v1/diary', entryRoute);
+app.use('/api/v1/user', userRoute);
 
 app.listen(port, async () => {
   console.log(`server is running on port ${port}...`);
