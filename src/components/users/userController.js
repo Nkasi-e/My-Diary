@@ -13,7 +13,9 @@ const {
 const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
   try {
-    const user = await User.create({ name, email, password });
+    // const { error } = validateRegisterDetails(req.body);
+    // if (error) return res.status(401).json({ message: `Registration failed` });
+    const user = await User.create({ name, email, password: hashPassword });
     return res.json({ user });
   } catch (error) {
     console.log('empty');

@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const Joi = require('joi');
 const schema = require('./userValidation');
 
-const options = { language: { key: '{{key}' } };
+const options = { abortEarly: false };
 
 async function hashPassword(password) {
   const hash = await bcrypt.hash(password, 10);
@@ -15,11 +15,11 @@ async function comparePassword(password, userPassword) {
 }
 
 function validateRegisterDetails(user) {
-  return Joi.validate(user, schema.userSchema, options);
+  return Joi.validate(user, schema.userSchema);
 }
 
 function validateLoginDetails(user) {
-  return Joi.validate(user, schema.loginSchema, options);
+  return Joi.validate(user, schema.loginSchema);
 }
 
 module.exports = {
