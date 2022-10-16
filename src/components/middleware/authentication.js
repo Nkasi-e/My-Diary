@@ -1,34 +1,26 @@
 const jwt = require('jsonwebtoken');
-const { StatusCodes } = require('http-status-codes');
 
 // AUTHORIZING USERS
-async function authorization(req, res, next) {
+const authMiddleware = async (req, res, next) => {
+  const authHeader = req.headers.authorization;
+
+  // Checking if auth header/Bearer token exist
+  if (!authHeader || !authHeader.startsWith('Bearer')) {
+    res.status(401).json({ message: `Invalid authentication` });
+    throw new Error('Invalid token');
+  }
+
+  const token = authHeader.split(' ')[1];
   try {
-    const authHeader = req.headers.authorization;
-
-    if (!authHeader || !authHeader.startsWith('Bearer')) {
-      res.status(StatusCodes.UNAUTHORIZED);
-      res.json({ message: 'invalid user token' });
-      throw new Error('invalid user id');
-    }
-    const token = authHeader.split(' ')[1];
-    //  verifying user token
-    const payLoad = jwt.verify(token, process.env.JWT_SECRETE);
-    const { userid, username } = payLoad;
-    const user = { userid, username };
-
-    // creating user object
+    // Verifying token
+    const payload = jwt.verify(token, process.env.JWT_SECRETE);
+    const { userId, email } = payload;
+    const user = { userId, email };
     req.user = user;
     next();
   } catch (error) {
-    if (error.name === 'JsonWebTokenError') {
-      res.status(StatusCodes.UNAUTHORIZED);
-      res.json({ message: ' invalid user token' });
-    } else {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR);
-      res.json({ message: 'Something went wrong' });
-    }
+    res.status(401).json({ message: `Not authorized to access this route` });
   }
-}
+};
 
-module.exports = authorization;
+module.exports = authMiddleware;

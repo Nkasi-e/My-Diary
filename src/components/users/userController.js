@@ -91,8 +91,8 @@ const loginUser = async (req, res) => {
 
     // Creating JWT for client
     const token = existingUser.createJWT({
-      userId: existingUser.id,
-      email: existingUser.email,
+      userId: user.id,
+      email: user.email,
     });
     res.json({ message: `Login successful`, user, token });
   } catch (e) {

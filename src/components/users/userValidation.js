@@ -11,7 +11,13 @@ const validateLogin = Joi.object({
   password: Joi.string().required().min(5).max(20),
 });
 
+const updateUser = Joi.object({
+  name: Joi.string(),
+  email: Joi.string(),
+  password: Joi.string(),
+});
 module.exports = {
   validateRegister,
   validateLogin,
+  updateUser,
 };
