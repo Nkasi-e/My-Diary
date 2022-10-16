@@ -9,6 +9,7 @@ const {
 
 const router = Router();
 
-router.route('/').get(getUser).post(registerUser, loginUser).patch(updateUser);
+router.route('/').post(registerUser);
+router.route('/login').post(loginUser);
 
 module.exports = router;

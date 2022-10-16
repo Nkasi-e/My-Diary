@@ -1,58 +1,48 @@
 const { User } = require('./model/userModel');
-const {
-  hashPassword,
-  comparePassword,
-  validateRegisterDetails,
-  validateLoginDetails,
-} = require('./userHelper');
 
 /**
  * @description - create user controller
  *
  */
 const registerUser = async (req, res) => {
-  const { name, email, password } = req.body;
   try {
-    // const { error } = validateRegisterDetails(req.body);
-    // if (error) return res.status(401).json({ message: `Registration failed` });
-    const user = await User.create({ name, email, password: hashPassword });
-    return res.json({ user });
-  } catch (error) {
-    console.log('empty');
+    const { name, email, password } = req.body;
+    const duplicate = await User.findOne({ where: { email } });
+
+    if (duplicate)
+      return res.status(409).json({ message: `email already exist` });
+
+    const user = await User.create({
+      name,
+      email,
+      password,
+    });
+    const token = user.createJWT({ userId: user.id, email: user.email });
+    res.json({ user: user, token });
+  } catch (e) {
+    console.log(e);
   }
 };
-
-/**
- * @description - Login user controller
- */
-
+// FOR LOGGING INTO A USER ACCOUNT
 const loginUser = async (req, res) => {
+  const { email, password } = req.body;
   try {
-    console.log('login user');
-  } catch (error) {
-    console.log('empty');
+    if (!email || !password) {
+      return res
+        .status(400)
+        .json({ message: 'please provide email and password' });
+    }
+  } catch (e) {
+    res.send(404);
   }
-};
 
-const getUser = async (req, res) => {
-  try {
-    res.send('single user');
-  } catch (error) {
-    console.log('empty');
-  }
+  res.send('login');
 };
-
-const updateUser = async (req, res) => {
-  try {
-    console.log('Update user');
-  } catch (error) {
-    console.log('empty');
-  }
-};
+async function deleteAccount(req, res) {
+  res.send('delete acc');
+}
 
 module.exports = {
   registerUser,
   loginUser,
-  getUser,
-  updateUser,
 };
