@@ -13,7 +13,7 @@ const authMiddleware = async (req, res, next) => {
   const accessToken = token.split(' ')[1];
   try {
     // Verifying token
-    const payload = jwt.verify(accessToken, process.env.JWT_SECRETE);
+    const payload = jwt.verify(accessToken, process.env.JWT_SECRET);
     const { userId, email } = payload;
     const user = { userId, email };
     req.user = user;

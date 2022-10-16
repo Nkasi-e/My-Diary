@@ -34,6 +34,7 @@ const User = db.define(
   }
 );
 
+// hash password fn
 User.beforeCreate(async (user) => {
   const salt = await bcrypt.genSalt(8);
   const hash = await bcrypt.hash(user.password, salt);
@@ -46,7 +47,7 @@ User.prototype.comparePassword = async (password, hash) => {
   return match;
 };
 
-// Creating json wed token
+// Creating jsonwebtoken
 User.prototype.createJWT = (user) => {
   const token = jwt.sign(user, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_LIFETIME,
