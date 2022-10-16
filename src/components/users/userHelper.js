@@ -1,30 +1,29 @@
-const bcrypt = require('bcryptjs');
-const Joi = require('joi');
-const schema = require('./userValidation');
+const { validateRegister, validateLogin } = require('./userValidation');
 
-const options = { abortEarly: false };
-
-async function hashPassword(password) {
-  const hash = await bcrypt.hash(password, 10);
-  return hash;
-}
-
-async function comparePassword(password, userPassword) {
-  const match = await bcrypt.compare(password, userPassword);
-  return match;
-}
+const options = { language: { key: '{{key}} ' } };
 
 function validateRegisterDetails(user) {
-  return Joi.validate(user, schema.userSchema);
+  return validateRegister.validate(user, options);
 }
 
 function validateLoginDetails(user) {
-  return Joi.validate(user, schema.loginSchema);
+  return validateLogin.validate(user, options);
+}
+
+// Custom Error Message
+function errorResponse(res, status, code, message, field) {
+  return res.status(status).json({
+    error: {
+      status,
+      code,
+      message,
+      field: field || '',
+    },
+  });
 }
 
 module.exports = {
-  hashPassword,
-  comparePassword,
   validateRegisterDetails,
   validateLoginDetails,
+  errorResponse,
 };

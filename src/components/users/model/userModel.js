@@ -42,8 +42,8 @@ User.beforeCreate(async (user) => {
 
 // Hook for comparing password
 User.prototype.comparePassword = async (password, hash) => {
-  const isCorrect = await bcrypt.compare(password, hash);
-  return isCorrect;
+  const match = await bcrypt.compare(password, hash);
+  return match;
 };
 
 // Creating json wed token
