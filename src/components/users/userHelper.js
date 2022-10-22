@@ -19,21 +19,8 @@ function validateUpdate(user) {
   return updateUser.validate(user, options);
 }
 
-// Custom Error Message
-function errorResponse(res, status, code, message, field) {
-  return res.status(status).json({
-    error: {
-      status,
-      code,
-      message,
-      field: field || '',
-    },
-  });
-}
-
 module.exports = {
   validateRegisterDetails,
   validateLoginDetails,
   validateUpdate,
-  errorResponse,
 };

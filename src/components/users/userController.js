@@ -2,8 +2,8 @@ const { User } = require('./model/userModel');
 const {
   validateRegisterDetails,
   validateLoginDetails,
-  errorResponse,
 } = require('./userHelper');
+const errorResponse = require('../middleware/errorResponse');
 
 /**
  * @description - Create/Register user controller

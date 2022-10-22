@@ -1,24 +1,27 @@
 const { Record } = require('./models/entriesSchema');
+const { validateUserEntry, validateEntryUpdate } = require('./entryHelper');
+const errorResponse = require('../middleware/errorResponse');
 
 // Creating diary entry
 const postEntry = async (req, res) => {
   const { title, body } = req.body;
   try {
-    const { error } = req.body;
+    const { error } = validateUserEntry(req.body);
     if (error) {
-      return res
-        .status(404)
-        .json({ message: `Unable to create entry ${title},` });
+      const errorField = error.details[0].context.key;
+      const errorMessage = error.details[0].message;
+      return errorResponse(res, 400, 'USR_01', errorMessage, errorField);
     }
     const data = await Record.create({ title, body });
     res
       .status(201)
       .json({ message: `Diary entry created successfully`, Entry: data });
   } catch (e) {
-    res.status(500).json({
-      message: `Error Occurred`,
-      error: e.message,
-    });
+    // res.status(500).json({
+    //   message: `Internal server error`,
+
+    // });
+    console.log(e);
   }
 };
 
@@ -28,7 +31,7 @@ const viewAllEntries = async (req, res) => {
     const data = await Record.findAll();
     res.json({ message: `All Entries`, total: data.length, Entries: data });
   } catch (e) {
-    res.status(500).json({ message: `Error occurred`, e });
+    res.status(500).json({ message: `Internal server error` });
   }
 };
 
@@ -38,15 +41,18 @@ const viewSingleEntry = async (req, res) => {
   try {
     const data = await Record.findByPk(id);
     if (!data) {
-      return res
-        .status(404)
-        .json({ message: `Entry with id ${id} does not exist` });
+      return errorResponse(
+        res,
+        404,
+        'USR_05',
+        `Entry with ID NO. ${id} doesn't exist`,
+        'id'
+      );
     }
     res.json({ message: `Entry found`, total: data.length, entry: data });
   } catch (error) {
     res.status(500).json({
-      message: `Error occurred. Please try again later`,
-      error: error,
+      message: `Internal server error`,
     });
   }
 };
@@ -56,18 +62,28 @@ const modifyEntry = async (req, res) => {
   const { id } = req.params;
   const { title, body } = req.body;
   try {
+    const { error } = validateEntryUpdate(req.body);
+    if (error) {
+      const errorField = error.details[0].context.key;
+      const errorMessage = error.details[0].message;
+      return errorResponse(res, 400, 'USR_01', errorMessage, errorField);
+    }
     const data = await Record.findOne({ where: { id } });
     if (!data) {
-      return res
-        .status(404)
-        .json({ message: `Invalid entry ID ${id}. Entry not found` });
+      return errorResponse(
+        res,
+        404,
+        'USR_05',
+        `Entry with ID NO. ${id} doesn't exist`,
+        'id'
+      );
     }
     await Record.update({ title, body }, { where: { id } });
     res.status(202).json({
       message: `Entry with ID number ${id} updated successfully`,
     });
   } catch (error) {
-    res.status(500).json({ message: `Updating entry failed`, error: error });
+    res.status(500).json({ message: `Internal server error` });
   }
 };
 
@@ -77,14 +93,18 @@ const deleteEntry = async (req, res) => {
   try {
     const data = await Record.findOne({ where: { id } });
     if (!data) {
-      return res
-        .status(404)
-        .json({ message: `Entry with ID No. ${id} does not exist` });
+      return errorResponse(
+        res,
+        404,
+        'USR_05',
+        `Entry with ID NO. ${id} doesn't exist`,
+        'id'
+      );
     }
     await data.destroy();
     res.status(204).json({ message: `Successfully deleted entry` });
   } catch (err) {
-    res.status(500).json({ message: `Deleting failed`, error: err });
+    res.status(500).json({ message: `Internal server error` });
   }
 };
 

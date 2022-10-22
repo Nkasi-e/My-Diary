@@ -1,6 +1,4 @@
 const { Router } = require('express');
-const { validateEntry } = require('../middleware/validation');
-const validatorMiddleware = require('../middleware/validatorMiddleware');
 
 const {
   viewAllEntries,
@@ -12,14 +10,11 @@ const {
 
 const router = Router();
 
-router
-  .route('/')
-  .get(viewAllEntries)
-  .post([validatorMiddleware(validateEntry)], postEntry);
+router.route('/').get(viewAllEntries).post(postEntry);
 router
   .route('/:id')
   .get(viewSingleEntry)
   .delete(deleteEntry)
-  .patch([validatorMiddleware(validateEntry)], modifyEntry);
+  .patch(modifyEntry);
 
 module.exports = router;
