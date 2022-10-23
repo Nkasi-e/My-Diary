@@ -17,19 +17,13 @@ const registerUser = async (req, res) => {
     if (error) {
       const errorField = error.details[0].context.key;
       const errorMessage = error.details[0].message;
-      return errorResponse(res, 400, 'USR_01', errorMessage, errorField);
+      return errorResponse(res, 400, errorMessage, errorField);
     }
 
     // Checking for existing user
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser)
-      return errorResponse(
-        res,
-        409,
-        'USR_04',
-        'The email already exists.',
-        'email'
-      );
+      return errorResponse(res, 409, 'The email already exists.', 'email');
 
     // creating new user
     const user = await User.create({
@@ -59,19 +53,13 @@ const loginUser = async (req, res) => {
     if (error) {
       const errorField = error.details[0].context.key;
       const errorMessage = error.details[0].message;
-      return errorResponse(res, 400, 'USR_01', errorMessage, errorField);
+      return errorResponse(res, 400, errorMessage, errorField);
     }
 
     // Checking user
     const existingUser = await User.findOne({ where: { email } });
     if (!existingUser)
-      return errorResponse(
-        res,
-        400,
-        'USR_05',
-        "The email doesn't exist",
-        'email'
-      );
+      return errorResponse(res, 400, "The email doesn't exist", 'email');
 
     // Comparing user password
     const compare = existingUser.password;
@@ -80,7 +68,6 @@ const loginUser = async (req, res) => {
       return errorResponse(
         res,
         400,
-        'USR_04',
         'The email or password is Invalid',
         'email'
       );
