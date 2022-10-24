@@ -1,5 +1,5 @@
 // Custom Error Message
-function errorResponse(res, status, code, message, field) {
+function errorResponse(res, status, message, field) {
   return res.status(status).json({
     error: {
       status,

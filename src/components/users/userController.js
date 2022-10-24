@@ -40,6 +40,7 @@ const registerUser = async (req, res) => {
     res.json({ message: `Registration successful`, user: user, token });
   } catch (e) {
     res.status(500).json({ error: 'Internal Server Error' });
+    // console.log(e);
   }
 };
 

@@ -6,8 +6,7 @@ const authMiddleware = async (req, res, next) => {
 
   // Checking if auth header/Bearer token exist
   if (!token || !token.startsWith('Bearer ')) {
-    res.status(401).json({ message: `Invalid authentication` });
-    throw new Error('Invalid token');
+    return res.status(401).json({ message: `Invalid authentication` });
   }
 
   const accessToken = token.split(' ')[1];

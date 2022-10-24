@@ -5,6 +5,7 @@ const helmet = require('helmet');
 const xss = require('xss-clean');
 const swaggerUI = require('swagger-ui-express');
 const YAML = require('yamljs');
+const authMiddleware = require('./middleware/authentication');
 
 const swaggerDocument = YAML.load('./swagger.yaml');
 
@@ -31,7 +32,7 @@ app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 const port = process.env.PORT;
 
-app.use('/api/v1/diary', entryRoute);
+app.use('/api/v1/diary', authMiddleware, entryRoute);
 app.use('/api/v1/user', userRoute);
 
 app.listen(port, async () => {

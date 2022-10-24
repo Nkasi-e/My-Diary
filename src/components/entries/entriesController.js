@@ -4,13 +4,14 @@ const errorResponse = require('../middleware/errorResponse');
 
 // Creating diary entry
 const postEntry = async (req, res) => {
+  // await Record.sync({ force: true });
   const { title, body } = req.body;
   try {
     const { error } = validateUserEntry(req.body);
     if (error) {
       const errorField = error.details[0].context.key;
       const errorMessage = error.details[0].message;
-      return errorResponse(res, 400, 'USR_01', errorMessage, errorField);
+      return errorResponse(res, 400, errorMessage, errorField);
     }
     const data = await Record.create({ title, body });
     res
@@ -27,8 +28,10 @@ const postEntry = async (req, res) => {
 
 // Get all diary entries
 const viewAllEntries = async (req, res) => {
+  const { userId } = req.user;
+  console.log(userId);
   try {
-    const data = await Record.findAll();
+    const data = await Record.findAll({ where: { userId } });
     res.json({ message: `All Entries`, total: data.length, Entries: data });
   } catch (e) {
     res.status(500).json({ message: `Internal server error` });
@@ -44,7 +47,6 @@ const viewSingleEntry = async (req, res) => {
       return errorResponse(
         res,
         404,
-        'USR_05',
         `Entry with ID NO. ${id} doesn't exist`,
         'id'
       );
@@ -66,14 +68,13 @@ const modifyEntry = async (req, res) => {
     if (error) {
       const errorField = error.details[0].context.key;
       const errorMessage = error.details[0].message;
-      return errorResponse(res, 400, 'USR_01', errorMessage, errorField);
+      return errorResponse(res, 400, errorMessage, errorField);
     }
     const data = await Record.findOne({ where: { id } });
     if (!data) {
       return errorResponse(
         res,
         404,
-        'USR_05',
         `Entry with ID NO. ${id} doesn't exist`,
         'id'
       );
@@ -96,7 +97,6 @@ const deleteEntry = async (req, res) => {
       return errorResponse(
         res,
         404,
-        'USR_05',
         `Entry with ID NO. ${id} doesn't exist`,
         'id'
       );

@@ -17,6 +17,9 @@ const Record = db.define(
       defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       allowNull: false,
     },
+    userId: {
+      type: Sequelize.INTEGER,
+    },
   },
   {
     timestamps: false,
