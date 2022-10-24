@@ -12,17 +12,19 @@ const Record = db.define(
       type: Sequelize.STRING,
       allowNull: false,
     },
-    date: {
-      type: 'TIMESTAMP',
-      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-      allowNull: false,
+    createdAt: {
+      type: Sequelize.DATE,
+      defaultValue: Sequelize.literal('NOW()'),
     },
-    userId: {
-      type: Sequelize.INTEGER,
+    updatedAt: {
+      type: Sequelize.DATE,
+      defaultValue: Sequelize.literal('NOW()'),
     },
   },
   {
-    timestamps: false,
+    timestamps: true,
+    createdat: 'createdAt',
+    updatedt: 'updatedAt',
   }
 );
 

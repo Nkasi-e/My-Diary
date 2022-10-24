@@ -4,7 +4,6 @@ const errorResponse = require('../middleware/errorResponse');
 
 // Creating diary entry
 const postEntry = async (req, res) => {
-  // await Record.sync({ force: true });
   const { title, body } = req.body;
   try {
     const { error } = validateUserEntry(req.body);
@@ -18,23 +17,22 @@ const postEntry = async (req, res) => {
       .status(201)
       .json({ message: `Diary entry created successfully`, Entry: data });
   } catch (e) {
-    // res.status(500).json({
-    //   message: `Internal server error`,
-
-    // });
+    res.status(500).json({
+      message: `Internal server error`,
+      e,
+    });
     console.log(e);
   }
 };
 
 // Get all diary entries
 const viewAllEntries = async (req, res) => {
-  const { userId } = req.user;
-  console.log(userId);
   try {
-    const data = await Record.findAll({ where: { userId } });
+    const data = await Record.findAll();
     res.json({ message: `All Entries`, total: data.length, Entries: data });
   } catch (e) {
     res.status(500).json({ message: `Internal server error` });
+    // console.log(e);
   }
 };
 
