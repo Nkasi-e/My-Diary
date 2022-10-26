@@ -20,6 +20,9 @@ const authMiddleware = async (req, res, next) => {
     const { userid, email } = payLoad;
     const user = { userid, email };
 
+    // // To check token for loging out
+    // req.token = token;
+
     // creating user object
     req.user = user;
 

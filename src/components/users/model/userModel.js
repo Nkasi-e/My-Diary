@@ -41,7 +41,7 @@ const User = db.define(
 
 // hash password fn
 User.beforeCreate(async (user) => {
-  const salt = await bcrypt.genSalt(8);
+  const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(user.password, salt);
   user.password = hash;
 });

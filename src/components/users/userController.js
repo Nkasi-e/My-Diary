@@ -91,12 +91,19 @@ const loginUser = async (req, res) => {
 /**
  * @description - user profile
  */
-const profile = async (req, res) => {
-  return res.send(req.user);
+const userProfile = async (req, res) => {
+  const { userid } = req.user;
+  const id = userid;
+  try {
+    const user = await User.findAll({ where: { id } });
+    res.json({ message: `My Profile`, user });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 module.exports = {
   registerUser,
   loginUser,
-  profile,
+  userProfile,
 };
