@@ -19,6 +19,7 @@
     "node/no-extraneous-require": 0,
     "no-process-exit": 1,
     "object-shorthand": "off",
-    "class-methods-use-this": "off"
+    "class-methods-use-this": "off",
+    "dot-notation": "error"
   }
 }

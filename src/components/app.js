@@ -32,7 +32,7 @@ app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 const port = process.env.PORT;
 
-app.use('/api/v1/diary', entryRoute);
+app.use('/api/v1/diary', authMiddleware, entryRoute);
 app.use('/api/v1/user', userRoute);
 
 app.listen(port, async () => {

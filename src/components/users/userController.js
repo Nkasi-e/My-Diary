@@ -36,11 +36,11 @@ const registerUser = async (req, res) => {
     delete user.dataValues.password;
 
     // creating jsonwebtoken
-    const token = user.createJWT({ userId: user.id, email: user.email });
+    const token = user.createJWT({ userid: user.id, email: user.email });
     res.json({ message: `Registration successful`, user: user, token });
   } catch (e) {
     res.status(500).json({ error: 'Internal Server Error' });
-    // console.log(e);
+    console.log(e);
   }
 };
 
@@ -79,7 +79,7 @@ const loginUser = async (req, res) => {
 
     // Creating JWT for client
     const token = existingUser.createJWT({
-      userId: user.id,
+      userid: user.id,
       email: user.email,
     });
     res.json({ message: `Login successful`, user, token });
@@ -88,7 +88,15 @@ const loginUser = async (req, res) => {
   }
 };
 
+/**
+ * @description - user profile
+ */
+const profile = async (req, res) => {
+  return res.send(req.user);
+};
+
 module.exports = {
   registerUser,
   loginUser,
+  profile,
 };

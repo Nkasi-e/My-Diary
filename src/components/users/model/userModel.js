@@ -7,6 +7,11 @@ const db = require('../../config/config');
 const User = db.define(
   'user',
   {
+    id: {
+      type: Sequelize.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
     name: {
       type: Sequelize.STRING,
       allowNull: false,
@@ -49,7 +54,7 @@ User.prototype.comparePassword = async (password, hash) => {
 
 // Creating jsonwebtoken
 User.prototype.createJWT = (user) => {
-  const token = jwt.sign(user, process.env.JWT_SECRET, {
+  const token = jwt.sign(user, process.env.JWT_SECRETE, {
     expiresIn: process.env.JWT_LIFETIME,
   });
   return token;

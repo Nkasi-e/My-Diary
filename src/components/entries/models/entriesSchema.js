@@ -4,6 +4,11 @@ const db = require('../../config/config');
 const Record = db.define(
   'records',
   {
+    id: {
+      type: Sequelize.BIGINT,
+      autoIncrement: true,
+      primaryKey: true,
+    },
     title: {
       type: Sequelize.STRING,
       allowNull: false,
@@ -12,19 +17,23 @@ const Record = db.define(
       type: Sequelize.STRING,
       allowNull: false,
     },
-    createdAt: {
-      type: Sequelize.DATE,
-      defaultValue: Sequelize.literal('NOW()'),
+    userid: {
+      type: Sequelize.BIGINT,
+      // references: {
+      //   // Explicitly tells Sequelize to create a foreign key relation with `Users`.`id`
+      //   model: 'User',
+      //   key: 'id',
+      // },
+      // field: 'id',
     },
-    updatedAt: {
+    date: {
       type: Sequelize.DATE,
-      defaultValue: Sequelize.literal('NOW()'),
+      allowNull: false,
+      defaultValue: Sequelize.NOW,
     },
   },
   {
-    timestamps: true,
-    createdat: 'createdAt',
-    updatedt: 'updatedAt',
+    timestamps: false,
   }
 );
 
