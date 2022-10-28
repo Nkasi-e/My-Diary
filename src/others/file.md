@@ -33,3 +33,22 @@ res.json({ message: 'Something went wrong' });
 }
 
 module.exports = authorization;
+
+// const allowedUpdate = ['email', 'password'];
+// const updates = Object.keys(req.body);
+// const isValidOperation = updates.every((update) =>
+// allowedUpdate.includes(update)
+// );
+// if (!isValidOperation) {
+// res.status(400).json({ error: 'Invalid updates!' });
+// }
+
+// try {
+// updates.forEach((update) => (req.user[update] = req.body[update]));
+// await req.user.save();
+
+// res.send(req.user);
+// } catch (error) {
+// res.status(400).send();
+// console.log(error);
+// }

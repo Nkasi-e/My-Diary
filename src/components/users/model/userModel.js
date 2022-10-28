@@ -27,6 +27,17 @@ const User = db.define(
     password: {
       type: Sequelize.STRING,
       allowNull: false,
+      validate: {
+        validatePassword: function (password) {
+          if (
+            !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(password)
+          ) {
+            throw new Error(
+              'The password must contain at least 8 characters including at least one uppercase, one lowercase, one number'
+            );
+          }
+        },
+      },
     },
     date: {
       type: 'TIMESTAMP',
@@ -60,6 +71,17 @@ User.prototype.createJWT = (user) => {
   return token;
 };
 
+// User.prototype.hashPassword = async function (user) {
+//   const salt = await bcrypt.genSalt(10);
+//   const hash = await bcrypt.hash(user.password, salt);
+//   user.password = hash;
+// };
+async function hashPassword(password) {
+  const salt = await bcrypt.genSalt(10);
+  const hash = await bcrypt.hash(password, salt);
+  return hash;
+}
 module.exports = {
   User,
+  hashPassword,
 };

@@ -1,9 +1,10 @@
-const { User } = require('./model/userModel');
+const { User, hashPassword } = require('./model/userModel');
 const {
   validateRegisterDetails,
   validateLoginDetails,
 } = require('./userHelper');
 const errorResponse = require('../middleware/errorResponse');
+const { where } = require('../config/config');
 
 /**
  * @description - Create/Register user controller
@@ -70,7 +71,7 @@ const loginUser = async (req, res) => {
         res,
         400,
         'The email or password is Invalid',
-        'email'
+        'email/password'
       );
 
     // deleting password before sending response
@@ -89,14 +90,45 @@ const loginUser = async (req, res) => {
 };
 
 /**
- * @description - user profile
+ * @description - controller for getting personal user profile information
  */
 const userProfile = async (req, res) => {
   const { userid } = req.user;
   const id = userid;
   try {
-    const user = await User.findAll({ where: { id } });
+    const user = await User.findOne({ where: { id } });
+    if (!user)
+      return errorResponse(
+        res,
+        404,
+        `This account has been deleted`,
+        'Invalid account'
+      );
+    await User.findAll({ where: { id } });
     res.json({ message: `My Profile`, user });
+  } catch (error) {
+    res.status(500).json({ error: `Internal server error` });
+    console.log(error);
+  }
+};
+
+/**
+ * @description - controller for deleting user Account
+ */
+const deleteAccount = async (req, res) => {
+  const { userid } = req.user;
+  const id = userid;
+  try {
+    const user = await User.findOne({ where: { id } });
+    if (!user)
+      return errorResponse(
+        res,
+        404,
+        `The account doesn't exist`,
+        'Invalid account'
+      );
+    await user.destroy({ where: { id } });
+    res.json({ message: `Account deleted successfully` });
   } catch (error) {
     console.log(error);
   }
@@ -106,4 +138,5 @@ module.exports = {
   registerUser,
   loginUser,
   userProfile,
+  deleteAccount,
 };
