@@ -4,7 +4,6 @@ const {
   validateLoginDetails,
 } = require('./userHelper');
 const errorResponse = require('../middleware/errorResponse');
-const { where } = require('../config/config');
 
 /**
  * @description - Create/Register user controller
