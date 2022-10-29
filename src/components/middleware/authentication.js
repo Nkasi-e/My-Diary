@@ -16,7 +16,6 @@ const authMiddleware = async (req, res, next) => {
     // Verifying token
     const payLoad = jwt.verify(accessToken, process.env.JWT_SECRETE);
 
-    // console.log(payload);
     const { userid, email } = payLoad;
     const user = { userid, email };
 
