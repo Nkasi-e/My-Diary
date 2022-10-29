@@ -33,6 +33,15 @@ const postEntry = async (req, res) => {
 const viewAllEntries = async (req, res) => {
   const { userid } = req.user;
   try {
+    const user = await Record.findOne({ where: { userid } });
+    if (!user)
+      return errorResponse(
+        res,
+        204,
+        `No diary logs associated with the provided user details`,
+        'user not found'
+      );
+
     const data = await Record.findAll({ where: { userid } });
     res.json({ message: `All Entries`, total: data.length, Entries: data });
   } catch (e) {

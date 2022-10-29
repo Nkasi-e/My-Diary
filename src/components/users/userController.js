@@ -4,6 +4,7 @@ const {
   validateLoginDetails,
 } = require('./userHelper');
 const errorResponse = require('../middleware/errorResponse');
+const { sendWelcomeEmail, sendGoodbyeEmail } = require('../utils/mail');
 
 /**
  * @description - Create/Register user controller
@@ -34,6 +35,9 @@ const registerUser = async (req, res) => {
 
     // Deleting password before sending response
     delete user.dataValues.password;
+
+    // sending welcome email to user after registering successfully
+    sendWelcomeEmail(user.email, user.name);
 
     // creating jsonwebtoken
     const token = user.createJWT({ userid: user.id, email: user.email });
@@ -127,8 +131,13 @@ const deleteAccount = async (req, res) => {
         'Invalid account'
       );
     await user.destroy({ where: { id } });
+
+    // sending goodbye email to user after deletion
+    sendGoodbyeEmail(user.email, user.name);
+    // send response
     res.json({ message: `Account deleted successfully` });
   } catch (error) {
+    res.status(500).json({ error: `Internal Server Error` });
     console.log(error);
   }
 };
