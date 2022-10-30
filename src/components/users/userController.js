@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken');
 const { User, hashPassword } = require('./model/userModel');
 const {
   validateRegisterDetails,
@@ -98,13 +99,14 @@ const loginUser = async (req, res) => {
 const userProfile = async (req, res) => {
   const { userid } = req.user;
   const id = userid;
+
   try {
     const user = await User.findOne({ where: { id } });
     if (!user)
       return errorResponse(
         res,
         404,
-        `This account has been deleted`,
+        `This account does not exist`,
         'Invalid account'
       );
     await User.findAll({ where: { id } });
@@ -142,9 +144,24 @@ const deleteAccount = async (req, res) => {
   }
 };
 
+// getting user info with token
+const userInfo = async (req, res) => {
+  const { token } = req.params;
+  try {
+    if (!token)
+      errorResponse(res, 400, `Please provide a valid token`, 'token');
+    const payLoad = jwt.verify(token, process.env.JWT_SECRETE);
+    res.json({ success: true, payLoad });
+  } catch (e) {
+    res.status(500).json({ error: `Internal Server Error` });
+    console.log(e);
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
   userProfile,
   deleteAccount,
+  userInfo,
 };
