@@ -3,6 +3,7 @@ const { User, hashPassword } = require('./model/userModel');
 const {
   validateRegisterDetails,
   validateLoginDetails,
+  validateEmail,
 } = require('./userHelper');
 const errorResponse = require('../middleware/errorResponse');
 const { sendWelcomeEmail, sendGoodbyeEmail } = require('../utils/mail');
@@ -153,6 +154,25 @@ const userInfo = async (req, res) => {
     res.json({ success: true, payLoad });
   } catch (e) {
     res.status(500).json({ error: `Internal Server Error` });
+    console.log(e);
+  }
+};
+
+// FORGOT PASSWSWORD
+
+const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+  try {
+    const { error } = validateEmail(req.body);
+    if (error) {
+      const errorField = error.details[0].context.key;
+      const errorMessage = error.details[0].message;
+      return errorResponse(res, 400, errorMessage, errorField);
+    }
+    const user = await User.findOne({ where: { email } });
+    if (!user)
+      return errorResponse(res, 404, `The email doesn't exist`, 'email');
+  } catch (e) {
     console.log(e);
   }
 };
