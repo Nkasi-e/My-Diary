@@ -148,7 +148,7 @@ const deleteAccount = async (req, res) => {
 const userInfo = async (req, res) => {
   const { token } = req.params;
   try {
-    if (!token) errorResponse(res, 404, `token is not valid`, 'token');
+    if (!token) errorResponse(res, 400, `token is not valid`, 'token');
     const payLoad = jwt.verify(token, process.env.JWT_SECRETE);
     res.json({ success: true, payLoad });
   } catch (e) {
