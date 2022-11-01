@@ -2,7 +2,8 @@ const {
   validateRegister,
   validateLogin,
   updateUser,
-  resetPassword,
+  resetPasswordEmail,
+  resetPasswordPass,
 } = require('./userValidation');
 
 const options = { language: { key: '{{key}} ' } };
@@ -21,7 +22,10 @@ function validateUpdate(user) {
 }
 
 function validateEmail(user) {
-  return resetPassword.validate(user, options);
+  return resetPasswordEmail.validate(user, options);
+}
+function validatePassword(user) {
+  return resetPasswordPass.validate(user, options);
 }
 
 module.exports = {
@@ -29,4 +33,5 @@ module.exports = {
   validateLoginDetails,
   validateUpdate,
   validateEmail,
+  validatePassword,
 };

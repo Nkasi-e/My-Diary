@@ -1,12 +1,21 @@
 const jwt = require('jsonwebtoken');
-const { User, hashPassword } = require('./model/userModel');
+const bcrypt = require('bcrypt');
+const { User } = require('./model/userModel');
 const {
   validateRegisterDetails,
   validateLoginDetails,
   validateEmail,
+  validatePassword,
 } = require('./userHelper');
 const errorResponse = require('../middleware/errorResponse');
-const { sendWelcomeEmail, sendGoodbyeEmail } = require('../utils/mail');
+const {
+  sendWelcomeEmail,
+  sendGoodbyeEmail,
+  sendResetPasswordEmail,
+  sendSuccessPasswordEmail,
+} = require('../utils/mail');
+
+const { LINK_LIFETIME, JWT_SECRETE } = process.env;
 
 /**
  * @description - Create/Register user controller
@@ -158,21 +167,98 @@ const userInfo = async (req, res) => {
   }
 };
 
-// FORGOT PASSWSWORD
+// FORGOT PASSWSWORD FLOW
 
+/**
+ * @descriptions - controller handling forgot password request from user and sending link for resetting the password
+ */
 const forgotPassword = async (req, res) => {
   const { email } = req.body;
   try {
+    // Handling user error
     const { error } = validateEmail(req.body);
     if (error) {
       const errorField = error.details[0].context.key;
       const errorMessage = error.details[0].message;
       return errorResponse(res, 400, errorMessage, errorField);
     }
+
+    // checking for user
     const user = await User.findOne({ where: { email } });
     if (!user)
       return errorResponse(res, 404, `The email doesn't exist`, 'email');
+    const secret = JWT_SECRETE + user.password;
+    const payload = {
+      email: user.email,
+      id: user.id,
+      name: user.name,
+    };
+
+    // signing a new jwt for user and sending link
+    const token = jwt.sign(payload, secret, { expiresIn: '10m' });
+    const link = `http://localhost:3000/api/v1/user/reset-password/${user.id}/${token}`;
+
+    // sending reset link to email address
+    sendResetPasswordEmail(user.email, link);
+    res.json({
+      message: `Password reset link has been sent to your email ${email}`,
+    });
   } catch (e) {
+    res.status(500).json({ error: `Internal Server Error` });
+    console.log(e);
+  }
+};
+
+/**
+ * @descriptions - Demo respons on the browser
+ */
+const linkMessage = (req, res) => {
+  const { id, token } = req.params;
+  res.send({
+    message: `<h2>Head to postman to reset password</h2>`,
+    link: `${id}/${token}`,
+  });
+};
+
+/**
+ * @descriptions - Controller for reseting the users password and saving the new password to the database.
+ */
+const resetPassword = async (req, res) => {
+  const { id, token } = req.params;
+  const { password } = req.body;
+
+  try {
+    // checking for user error
+    const { error } = validatePassword(req.body);
+    if (error) {
+      const errorField = error.details[0].context.key;
+      const errorMessage = error.details[0].message;
+      return errorResponse(res, 400, errorMessage, errorField);
+    }
+
+    // checking for user in database
+    const user = await User.findOne({ where: { id } });
+    if (!user) return errorResponse(res, 400, `Invalid ID...`, 'id');
+    const secret = process.env.JWT_SECRETE + user.password;
+
+    // verifying users token
+    const payload = jwt.verify(token, secret);
+
+    // hashing new password before saving
+    const hashPassword = await bcrypt.hash(password, 10);
+
+    /// updating user's password
+    await user.update({ password: hashPassword }, { where: { id } });
+
+    // sending success mail
+    sendSuccessPasswordEmail(user.email, user.name);
+    res.json({
+      success: true,
+      message: `You have successfully reset your password`,
+    });
+    return payload;
+  } catch (e) {
+    res.status(500).json({ error: `Internal Server error` });
     console.log(e);
   }
 };
@@ -183,4 +269,7 @@ module.exports = {
   userProfile,
   deleteAccount,
   userInfo,
+  forgotPassword,
+  resetPassword,
+  linkMessage,
 };

@@ -51,4 +51,42 @@ const sendGoodbyeEmail = async (email, name) => {
   }
 };
 
-module.exports = { sendWelcomeEmail, sendGoodbyeEmail };
+/**
+ * @description - email configuration for password reset of users
+ */
+
+const sendResetPasswordEmail = async (email, link) => {
+  try {
+    const info = await transporter.sendMail({
+      from: 'admin@mydiarylogs.com',
+      to: `${email}`,
+      subject: `Password Reset Link`,
+      text: `Dear user use the link below to reset your password ${link}`,
+      //   html: '<b><p>Do well to enjoy your usage </></b>', // html body
+    });
+    return info;
+  } catch (e) {
+    console.log(e);
+  }
+};
+const sendSuccessPasswordEmail = async (email, name) => {
+  try {
+    const info = await transporter.sendMail({
+      from: 'admin@mydiarylogs.com',
+      to: `${email}`,
+      subject: `Password reset`,
+      text: `Hello ${name}, You have successfully reset your password, Thank you!!`,
+      //   html: '<b><p>Do well to enjoy your usage </></b>', // html body
+    });
+    return info;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+module.exports = {
+  sendWelcomeEmail,
+  sendGoodbyeEmail,
+  sendResetPasswordEmail,
+  sendSuccessPasswordEmail,
+};

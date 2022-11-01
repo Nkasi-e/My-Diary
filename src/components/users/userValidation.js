@@ -30,13 +30,22 @@ const updateUser = Joi.object({
   email: Joi.string().messages(emailErrorMessage),
   password: Joi.string().messages(passwordErrorMessage),
 });
-const resetPassword = Joi.object({
+const resetPasswordEmail = Joi.object({
   email: Joi.string().required().email().min(3).messages(emailErrorMessage),
+});
+const resetPasswordPass = Joi.object({
+  password: Joi.string()
+    .min(8)
+    .required()
+    .regex(pattern)
+    .message(registerPassError)
+    .messages(passwordErrorMessage),
 });
 
 module.exports = {
   validateRegister,
   validateLogin,
   updateUser,
-  resetPassword,
+  resetPasswordEmail,
+  resetPasswordPass,
 };
