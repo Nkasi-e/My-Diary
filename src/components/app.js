@@ -40,3 +40,5 @@ app.listen(port, async () => {
   await DB.authenticate();
   console.log(`DB connected successfully`);
 });
+
+module.exports = app;
