@@ -4,7 +4,8 @@
     "commonjs": true,
     "es2021": true,
     "node": true,
-    "es6": true
+    "es6": true,
+    "mocha": true
   },
   "extends": ["airbnb", "prettier", "plugin:node/recommended"],
   "plugins": ["prettier"],
@@ -21,6 +22,9 @@
     "object-shorthand": "off",
     "class-methods-use-this": "off",
     "dot-notation": "error",
-    "no-return-assign": "off"
+    "no-return-assign": "off",
+    "import/no-extraneous-dependencies": "off",
+    "node/no-unpublished-require": "off",
+    "prefer-const": "warn"
   }
 }

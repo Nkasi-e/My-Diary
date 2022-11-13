@@ -21,8 +21,8 @@ const { LINK_LIFETIME, JWT_SECRETE } = process.env;
  * @description - Create/Register user controller
  */
 const registerUser = async (req, res) => {
+  const { name, email, password } = req.body;
   try {
-    const { name, email, password } = req.body;
     const { error } = validateRegisterDetails(req.body);
 
     // Handling client error
@@ -52,7 +52,9 @@ const registerUser = async (req, res) => {
 
     // creating jsonwebtoken
     const token = user.createJWT({ userid: user.id, email: user.email });
-    res.json({ message: `Registration successful`, user: user, token });
+    res
+      .status(201)
+      .json({ message: `Registration successful`, user: user, token });
   } catch (e) {
     res.status(500).json({ error: 'Internal Server Error' });
     console.log(e);
@@ -120,7 +122,7 @@ const userProfile = async (req, res) => {
         'Invalid account'
       );
     await User.findAll({ where: { id } });
-    res.json({ message: `My Profile`, user });
+    res.status(200).json({ message: `My Profile`, user });
   } catch (error) {
     res.status(500).json({ error: `Internal server error` });
     console.log(error);
@@ -158,8 +160,8 @@ const deleteAccount = async (req, res) => {
 const userInfo = async (req, res) => {
   const { token } = req.params;
   try {
-    if (!token) errorResponse(res, 400, `token is not valid`, 'token');
     const payLoad = jwt.verify(token, process.env.JWT_SECRETE);
+    if (!payLoad) errorResponse(res, 400, `token is not valid`, 'token');
     res.json({ success: true, payLoad });
   } catch (e) {
     res.status(500).json({ error: `Internal Server Error` });
