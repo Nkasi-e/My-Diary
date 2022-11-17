@@ -1,0 +1,152 @@
+openapi: 3.0.0
+info:
+  title: Diary API
+  contact: {}
+  version: '1.0'
+servers:
+  - url: http://localhost:3000/api/v1
+    variables: {}
+paths:
+  /diary:
+    get:
+      tags:
+        - Misc
+      summary: Get All Entries
+      operationId: GetAllEntries
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    post:
+      tags:
+        - Misc
+      summary: Create Diary Entry
+      operationId: CreateDiaryEntry
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/CreateDiaryEntryRequest'
+                - example:
+                    title: New Task
+                    description: Started my software development internship
+                    date: 2022-09-12
+            example:
+              title: New Task
+              description: Started my software development internship
+              date: 2022-09-12
+        required: true
+      responses:
+        '201':
+          description: ''
+          headers: {}
+      deprecated: false
+  /diary/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The diary ID
+    get:
+      tags:
+        - Misc
+      summary: Get single Entry
+      operationId: GetsingleEntry
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+
+    delete:
+      tags:
+        - Misc
+      summary: Delete Entry
+      operationId: DeleteEntry
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+
+    patch:
+      tags:
+        - Misc
+      summary: Update Entry
+      operationId: UpdateEntry
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/UpdateEntryRequest'
+                - example:
+                    title: Lost Boyr
+                    body: People get lost in space and quantum mechanics
+                    date: 2022-09-23
+            example:
+              title: Lost Boyr
+              body: People get lost in space and quantum mechanics
+              date: 2022-09-23
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+components:
+  schemas:
+    CreateDiaryEntryRequest:
+      title: CreateDiaryEntryRequest
+      required:
+        - title
+        - description
+        - date
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        date:
+          type: string
+      example:
+        title: New Task
+        description: Started my software development internship
+        date: 2022-09-12
+    UpdateEntryRequest:
+      title: UpdateEntryRequest
+      required:
+        - title
+        - body
+        - date
+      type: object
+      properties:
+        title:
+          type: string
+        body:
+          type: string
+        date:
+          type: string
+      example:
+        title: Lost Boyr
+        body: People get lost in space and quantum mechanics
+        date: 2022-09-23
+  securitySchemes:
+    httpBearer:
+      type: http
+      scheme: bearer
+security:
+  - httpBearer: []
+tags: []
