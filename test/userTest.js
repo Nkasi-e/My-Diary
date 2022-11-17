@@ -1,14 +1,9 @@
 const chai = require('chai');
-
 const chaiHttp = require('chai-http');
-
 const server = require('../src/components/app');
-
 const { User } = require('../src/components/users/model/userModel');
 
 chai.should();
-
-const { expect } = chai;
 chai.use(chaiHttp);
 
 const testUser = {
