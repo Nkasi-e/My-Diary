@@ -7,7 +7,6 @@
     "start": "node src/components/app.js",
     "dev": "env-cmd -f ./.env/.env nodemon src/components/app.js",
     "test": "env-cmd -f ./.env/.env nyc --reporter=html --reporter=text --reporter=lcov mocha test/*",
-    "coverall": "nyc --reporter=lcov --reporter=text npm run test",
     "coverage":"nyc report --reporter=text-lcov | coveralls "
   },
   "keywords": [],
