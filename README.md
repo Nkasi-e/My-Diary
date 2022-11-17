@@ -1,6 +1,6 @@
 # DIARY API
 
-[![Coverage Status](https://coveralls.io/repos/github/Nkasi-e/My-Diary/badge.svg?branch=main)](https://coveralls.io/github/Nkasi-e/My-Diary?branch=main)
+<!-- [![Coverage Status](https://coveralls.io/repos/github/Nkasi-e/My-Diary/badge.svg?branch=main)](https://coveralls.io/github/Nkasi-e/My-Diary?branch=main) -->
 
 ## _An Api that allows users to create, read and modify their diary logs_
 
