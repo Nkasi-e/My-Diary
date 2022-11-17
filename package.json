@@ -2,9 +2,9 @@
   "name": "my-diary",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node src/app.js",
+    "start": "node src/components/app.js",
     "dev": "env-cmd -f ./.env/.env nodemon src/components/app.js",
     "test": "env-cmd -f ./.env/.env mocha"
   },

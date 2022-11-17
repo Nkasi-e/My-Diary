@@ -87,7 +87,7 @@ const loginUser = async (req, res) => {
         res,
         400,
         'The email or password is Invalid',
-        'email/password'
+        'Invalid'
       );
 
     // deleting password before sending response
@@ -149,7 +149,7 @@ const deleteAccount = async (req, res) => {
     // sending goodbye email to user after deletion
     sendGoodbyeEmail(user.email, user.name);
     // send response
-    res.json({ message: `Account deleted successfully` });
+    res.status(204).json({ message: `Account deleted successfully` });
   } catch (error) {
     res.status(500).json({ error: `Internal Server Error` });
     console.log(error);

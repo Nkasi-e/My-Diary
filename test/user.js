@@ -8,58 +8,113 @@ const { User } = require('../src/components/users/model/userModel');
 
 chai.should();
 
-// const { expect } = chai;
+const { expect } = chai;
 chai.use(chaiHttp);
 
 const testUser = {
   name: 'anita',
   email: 'test@gmail.com',
-  password: 'password',
+  password: 'password1A',
 };
 
 let token;
 
-before((done) => {
-  User.destroy({ truncate: true });
-  chai
-    .request(server)
-    .post('/api/v1/user')
-    .set('content-type', 'application/json')
-    .send({
-      name: testUser.name,
-      email: testUser.email,
-      password: testUser.password,
-    })
-    .end((err, res) => {
-      if (err) {
-        console.log(err);
-        throw err;
-      }
-      token = res.body.token;
-      done();
-    });
+before(async () => {
+  const { email } = testUser;
+  await User.destroy({ where: { email } });
 });
 
-describe('POST /api/v1/user', () => {
+// testing register route
+describe('POST /api/v1/user/signup', () => {
   it('should create a new user and return back token', (done) => {
     chai
       .request(server)
-      .post('/api/v1/user')
+      .post('/api/v1/user/signup')
       .send(testUser)
       .end((err, res) => {
         if (err) {
           throw err;
         }
-        // eslint-disable-next-line prefer-destructuring
-        // const body = res.body;
-        // console.log(body);
-        // console.log(err);
-        // expect(res).to.have.status(404);
-        // expect(res.body.testUser.name).to.equal(testUser.name);
-        res.should.have.status(404);
-        // res.body.should.have.property('name').a('string');
-        // res.body.should.have.property('token').a('string');
-        // res.body.should.have.property('password').a('string');
+        res.should.have.status(201);
+        res.body.user.should.have.property('name').a('string');
+        res.body.user.should.have.property('email').a('string');
+        res.body.should.have.property('token');
+        token = res.body.token;
+        done();
+      });
+  });
+
+  it('should return 409 if email already exist', (done) => {
+    chai
+      .request(server)
+      .post('/api/v1/user/signup')
+      .send(testUser)
+      .end((err, res) => {
+        if (err) {
+          throw err;
+        }
+        res.should.have.status(409);
+        res.body.error.message.should.equal('The email already exists.');
+        res.body.error.field.should.equal('email');
+        res.body.error.status.should.equal(409);
+        done();
+      });
+  });
+});
+
+// testing login route
+describe('POST /api/v1/user/signup', () => {
+  it('should successfully login a user', (done) => {
+    const payload = { email: testUser.email, password: testUser.password };
+    chai
+      .request(server)
+      .post('/api/v1/user/login')
+      .send(payload)
+      .end((err, res) => {
+        if (err) {
+          throw err;
+        }
+        res.should.have.status(200);
+        res.body.user.should.be.a('object');
+        res.body.user.should.have.property('name').a('string');
+        res.body.user.should.have.property('email').a('string');
+        res.body.should.have.property('token').a('string');
+        res.body.message.should.equal('Login successful');
+        token = res.body.token;
+        done();
+      });
+  });
+
+  it('should fail to login if email is wrong', (done) => {
+    const wrongEmail = { email: 'wny@gmail.com', password: testUser.password };
+    chai
+      .request(server)
+      .post('/api/v1/user/login')
+      .send(wrongEmail)
+      .end((err, res) => {
+        if (err) {
+          throw err;
+        }
+        res.should.have.status(400);
+        res.body.error.message.should.equal(`The email doesn't exist`);
+        res.body.error.field.should.equal('email');
+        done();
+      });
+  });
+
+  it('should fail to login if password is wrong', (done) => {
+    const wrongPassword = { email: testUser.email, password: '347Qihdei' };
+    chai
+      .request(server)
+      .post('/api/v1/user/login')
+      .send(wrongPassword)
+      .end((err, res) => {
+        if (err) {
+          throw err;
+        }
+        res.should.have.status(400);
+        res.body.error.message.should.equal('The email or password is Invalid');
+        res.body.error.field.should.equal('Invalid');
         done();
       });
   });
