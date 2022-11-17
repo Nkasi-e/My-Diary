@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node src/components/app.js",
     "dev": "env-cmd -f ./.env/.env nodemon src/components/app.js",
-    "test": "env-cmd -f ./.env/.env mocha"
+    "test": "env-cmd -f ./.env/.env mocha",
+    "coverage": "nyc --reporter=lcov --reporter=text npm run test",
+    "coverall":"nyc report --reporter=text-lcov | coveralls "
   },
   "keywords": [],
   "author": "",
@@ -16,6 +18,7 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.0",
     "cors": "^2.8.5",
+    "coveralls": "^3.1.1",
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.2",
     "env-cmd": "^10.1.0",
@@ -51,6 +54,7 @@
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "mocha": "^10.0.0",
+    "nyc": "^15.1.0",
     "prettier": "^2.7.1"
   }
 }
