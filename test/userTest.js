@@ -114,3 +114,23 @@ describe('POST /api/v1/user/signup', () => {
       });
   });
 });
+
+describe('GET /api/v1/user/myprofile', () => {
+  it('should return back the user profile details', (done) => {
+    chai
+      .request(server)
+      .get('/api/v1/user/myprofile')
+      .set('Authorization', `Bearer ${token}`)
+      .end((err, res) => {
+        if (err) {
+          throw err;
+        }
+        res.should.have.status(200);
+        res.body.user.should.have.property('name').a('string');
+        res.body.user.should.have.property('email').a('string');
+        res.body.user.should.have.property('password').a('string');
+        res.body.message.should.equal('My Profile');
+        done();
+      });
+  });
+});
