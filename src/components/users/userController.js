@@ -162,7 +162,7 @@ const userInfo = async (req, res) => {
   try {
     const payLoad = jwt.verify(token, process.env.JWT_SECRETE);
     if (!payLoad) errorResponse(res, 400, `token is not valid`, 'token');
-    res.json({ success: true, payLoad });
+    res.status(200).json({ success: true, payLoad });
   } catch (e) {
     res.status(500).json({ error: `Internal Server Error` });
     console.log(e);
@@ -202,7 +202,7 @@ const forgotPassword = async (req, res) => {
 
     // sending reset link to email address
     sendResetPasswordEmail(user.email, link);
-    res.json({
+    res.status(200).json({
       message: `Password reset link has been sent to your email ${email}`,
     });
   } catch (e) {

@@ -58,7 +58,7 @@ describe('POST /api/v1/user/signup', () => {
 });
 
 // testing login route
-describe('POST /api/v1/user/signup', () => {
+describe('POST /api/v1/user/login', () => {
   it('should successfully login a user', (done) => {
     const payload = { email: testUser.email, password: testUser.password };
     chai
@@ -133,4 +133,67 @@ describe('GET /api/v1/user/myprofile', () => {
         done();
       });
   });
+
+  // it('should return invalid account', (done) => {
+  //   chai
+  //     .request(server)
+  //     .get('/api/v1/user/myprofile')
+  //     .set('Authorization', `Bearer ${token}`)
+  //     .end((err, res) => {
+  //       if (err) {
+  //         throw err;
+  //       }
+  //       res.should.have.status(204);
+  //       done();
+  //     });
+  // });
 });
+
+describe('POST /api/v1/user/deleteaccount', () => {
+  it('should delete the user account', (done) => {
+    chai
+      .request(server)
+      .post('/api/v1/user/deleteaccount')
+      .set('Authorization', `Bearer ${token}`)
+      .send(testUser)
+      .end((err, res) => {
+        if (err) {
+          throw err;
+        }
+        res.should.have.status(204);
+        done();
+      });
+  });
+
+  it('should return account deleted for deleted account', (done) => {
+    chai
+      .request(server)
+      .post('/api/v1/user/deleteaccount')
+      .set('Authorization', `Bearer ${token}`)
+      .send(testUser)
+      .end((err, res) => {
+        if (err) {
+          throw err;
+        }
+        res.should.have.status(404);
+        res.body.error.message.should.equal(`The account doesn't exist`);
+        res.body.error.field.should.equal('Invalid account');
+        done();
+      });
+  });
+});
+
+// describe('GET /api/v1/user/userinfo/:token', () => {
+//   it('should get user info with token', () => {
+//     chai
+//       .request(server)
+//       .post('/api/v1/user/forgotpassword')
+//       .send(testUser.email)
+//       .end((err, res) => {
+//         if (err) {
+//           throw err;
+//         }
+//         res.should.have.status(200);
+//       });
+//   });
+// });
