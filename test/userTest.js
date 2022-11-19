@@ -12,6 +12,9 @@ const testUser = {
   password: 'password1A',
 };
 
+const jwtToken =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOjM1LCJlbWFpbCI6Im5rYXNpam5yQGdtYWlsLmNvbSIsImlhdCI6MTY2ODEwODU3MywiZXhwIjoxNjcwNzAwNTczfQ.58xA_PFAHlw5Z0Y6sCTHvczquyv90IbMIMOaoNQUxDA';
+
 let token;
 
 before(async () => {
@@ -133,20 +136,6 @@ describe('GET /api/v1/user/myprofile', () => {
         done();
       });
   });
-
-  // it('should return invalid account', (done) => {
-  //   chai
-  //     .request(server)
-  //     .get('/api/v1/user/myprofile')
-  //     .set('Authorization', `Bearer ${token}`)
-  //     .end((err, res) => {
-  //       if (err) {
-  //         throw err;
-  //       }
-  //       res.should.have.status(204);
-  //       done();
-  //     });
-  // });
 });
 
 describe('POST /api/v1/user/deleteaccount', () => {
@@ -183,17 +172,22 @@ describe('POST /api/v1/user/deleteaccount', () => {
   });
 });
 
-// describe('GET /api/v1/user/userinfo/:token', () => {
-//   it('should get user info with token', () => {
-//     chai
-//       .request(server)
-//       .post('/api/v1/user/forgotpassword')
-//       .send(testUser.email)
-//       .end((err, res) => {
-//         if (err) {
-//           throw err;
-//         }
-//         res.should.have.status(200);
-//       });
-//   });
-// });
+describe('GET /api/v1/user/userinfo/:token', () => {
+  it('should get user info with token', (done) => {
+    chai
+      .request(server)
+      .get(`/api/v1/user/userinfo/${jwtToken}`)
+      .end((err, res) => {
+        if (err) {
+          throw err;
+        }
+        res.should.have.status(200);
+        res.body.success.should.equal(true);
+        res.body.payLoad.should.have.property('userid');
+        res.body.payLoad.should.have.property('email');
+        res.body.payLoad.should.have.property('iat');
+        res.body.payLoad.should.have.property('exp');
+        done();
+      });
+  });
+});

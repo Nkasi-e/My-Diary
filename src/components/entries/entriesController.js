@@ -43,7 +43,9 @@ const viewAllEntries = async (req, res) => {
       );
 
     const data = await Record.findAll({ where: { userid } });
-    res.json({ message: `All Entries`, total: data.length, Entries: data });
+    res
+      .status(200)
+      .json({ message: `All Entries`, total: data.length, Entries: data });
   } catch (e) {
     res.status(500).json({ message: `Internal server error` });
     console.log(e);
