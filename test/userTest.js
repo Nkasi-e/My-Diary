@@ -58,6 +58,48 @@ describe('POST /api/v1/user/signup', () => {
         done();
       });
   });
+
+  it('should fail if email is wrong', (done) => {
+    chai
+      .request(server)
+      .post('/api/v1/user/signup')
+      .send({ name: testUser.name, email: 'testgmail' })
+      .end((err, res) => {
+        if (err) {
+          throw err;
+        }
+        res.should.have.status(400);
+        res.body.should.have.property('error').to.be.a('object');
+        res.body.error.message.should.equal(
+          'email must be a valid email address'
+        );
+        res.body.error.field.should.equal('email');
+        done();
+      });
+  });
+
+  it('should fail if password does not meet conditions', (done) => {
+    chai
+      .request(server)
+      .post('/api/v1/user/signup')
+      .send({
+        name: testUser.name,
+        email: 'test@gmail.com',
+        password: 'ueuwoeuow',
+      })
+      .end((err, res) => {
+        if (err) {
+          throw err;
+        }
+        res.should.have.status(400);
+        res.body.should.have.property('error').to.be.a('object');
+        res.body.error.message.should.equal(
+          'The password must contain at least 8 characters including at least one uppercase, one lowercase, one number'
+        );
+        res.body.error.field.should.equal('password');
+        done();
+      });
+  });
 });
 
 // testing login route

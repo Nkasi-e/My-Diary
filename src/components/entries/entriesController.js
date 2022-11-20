@@ -81,7 +81,7 @@ const viewSingleEntry = async (req, res) => {
     }
 
     // returning the entry data
-    res.json({
+    res.status(200).json({
       message: `Entry found`,
       total: data.length,
       entry: data,
