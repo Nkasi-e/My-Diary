@@ -180,6 +180,78 @@ describe('GET /api/v1/user/myprofile', () => {
   });
 });
 
+describe('POST /api/v1/user/forgotpassword', () => {
+  it('it should send password for reseting', (done) => {
+    chai
+      .request(server)
+      .post('/api/v1/user/forgotpassword')
+      .send({ email: 'test00@gmail.com' })
+      .end((err, res) => {
+        if (err) throw err;
+        res.should.have.status(200);
+        res.body.should.have.property('message');
+        res.body.message.should
+          .equal(
+            `Password reset link has been sent to your email test00@gmail.com`
+          )
+          .to.be.a('string');
+        done();
+      });
+  });
+
+  it("should return 404 if email doesn't exist for password reset", (done) => {
+    chai
+      .request(server)
+      .post('/api/v1/user/forgotpassword')
+      .send({
+        email: 'gimicks@gmail.com',
+      })
+      .end((err, res) => {
+        if (err) throw err;
+        res.should.have.status(404);
+        res.body.error.message.should
+          .equal(`The email doesn't exist`)
+          .to.be.a('string');
+        res.body.error.field.should.equal(`email`).to.be.a('string');
+        done();
+      });
+  });
+
+  it('should return 400 if email is not a valid email address', (done) => {
+    chai
+      .request(server)
+      .post('/api/v1/user/forgotpassword')
+      .send({
+        email: 'gimicksgmail.com',
+      })
+      .end((err, res) => {
+        if (err) throw err;
+        res.should.have.status(400);
+        res.body.error.message.should
+          .equal(`email must be a valid email address`)
+          .to.be.a('string');
+        res.body.error.field.should.equal(`email`).to.be.a('string');
+        done();
+      });
+  });
+});
+
+// describe('POST /api/v1/user/reset-password/:id/:token', () => {
+//   it('should send password reset link', (done) => {
+//     chai
+//       .request(server)
+//       .post(`/api/v1/user/282/${jwtToken}`)
+//       .send({
+//         password: testUser.password,
+//       })
+//       .end((err, res) => {
+//         if (err) throw err;
+//         res.should.have.status(200);
+//         done();
+//       });
+//   });
+// });
+
 describe('POST /api/v1/user/deleteaccount', () => {
   it('should delete the user account', (done) => {
     chai

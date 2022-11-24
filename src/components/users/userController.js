@@ -217,7 +217,7 @@ const forgotPassword = async (req, res) => {
 const linkMessage = (req, res) => {
   const { id, token } = req.params;
   res.send({
-    message: `<h2>Head to postman to reset password</h2>`,
+    message: `<h2>Use the link below to reset your password</h2>`,
     link: `${id}/${token}`,
   });
 };
