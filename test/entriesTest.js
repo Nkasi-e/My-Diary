@@ -88,7 +88,7 @@ describe('GET /api/v1/diary/:id', () => {
   it('should get a single entry by id', (done) => {
     chai
       .request(server)
-      .get('/api/v1/diary/27')
+      .get('/api/v1/diary/29')
       .set({ Authorization: `Bearer ${token}` })
       .end((err, res) => {
         if (err) {
@@ -147,7 +147,7 @@ describe('PATCH /api/v1/diary/:id', () => {
   it('should update diary record', (done) => {
     chai
       .request(server)
-      .patch('/api/v1/diary/27')
+      .patch('/api/v1/diary/29')
       .set({ Authorization: `Bearer ${token}` })
       .send({
         title: entry.title,
@@ -160,7 +160,7 @@ describe('PATCH /api/v1/diary/:id', () => {
         expect(res).to.have.status(202);
         expect(res.body).to.have.property('message').to.be.a('string');
         expect(res.body.message).to.equal(
-          'Entry with ID number 27 updated successfully'
+          'Entry with ID number 29 updated successfully'
         );
         done();
       });
@@ -255,7 +255,7 @@ describe('DELETE /api/v1/diary/:id', () => {
   it('should successfully delete record', (done) => {
     chai
       .request(server)
-      .delete('/api/v1/diary/27')
+      .delete('/api/v1/diary/29')
       .set({ Authorization: `Bearer ${token}` })
       .end((err, res) => {
         if (err) throw err;
