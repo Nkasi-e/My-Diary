@@ -17,9 +17,9 @@ function validateLoginDetails(user) {
   return validateLogin.validate(user, options);
 }
 
-function validateUpdate(user) {
-  return updateUser.validate(user, options);
-}
+// function validateUpdate(user) {
+//   return updateUser.validate(user, options);
+// }
 
 function validateEmail(user) {
   return resetPasswordEmail.validate(user, options);
@@ -31,7 +31,7 @@ function validatePassword(user) {
 module.exports = {
   validateRegisterDetails,
   validateLoginDetails,
-  validateUpdate,
+  // validateUpdate,
   validateEmail,
   validatePassword,
 };

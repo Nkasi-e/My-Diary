@@ -57,7 +57,6 @@ const registerUser = async (req, res) => {
       .json({ message: `Registration successful`, user: user, token });
   } catch (e) {
     res.status(500).json({ error: 'Internal Server Error' });
-    console.log(e);
   }
 };
 
@@ -165,7 +164,6 @@ const userInfo = async (req, res) => {
     res.status(200).json({ success: true, payLoad });
   } catch (e) {
     res.status(500).json({ error: `Internal Server Error` });
-    console.log(e);
   }
 };
 
@@ -207,7 +205,6 @@ const forgotPassword = async (req, res) => {
     });
   } catch (e) {
     res.status(500).json({ error: `Internal Server Error` });
-    console.log(e);
   }
 };
 
@@ -216,8 +213,8 @@ const forgotPassword = async (req, res) => {
  */
 const linkMessage = (req, res) => {
   const { id, token } = req.params;
-  res.send({
-    message: `<h2>Head to postman to reset password</h2>`,
+  res.status(200).send({
+    message: `Use the link below to reset your password`,
     link: `${id}/${token}`,
   });
 };
@@ -254,14 +251,13 @@ const resetPassword = async (req, res) => {
 
     // sending success mail
     sendSuccessPasswordEmail(user.email, user.name);
-    res.json({
+    res.status(200).json({
       success: true,
       message: `You have successfully reset your password`,
     });
     return payload;
   } catch (e) {
     res.status(500).json({ error: `Internal Server error` });
-    console.log(e);
   }
 };
 

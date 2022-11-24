@@ -28,7 +28,6 @@ const authMiddleware = async (req, res, next) => {
     next();
   } catch (error) {
     res.status(401).json({ message: `Not authorized to access this route` });
-    console.log(error);
   }
 };
 
