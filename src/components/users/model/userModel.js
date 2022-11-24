@@ -71,12 +71,6 @@ User.prototype.createJWT = (user) => {
   return token;
 };
 
-User.prototype.hashPassword = async (password) => {
-  const salt = await bcrypt.genSalt();
-  const hash = await bcrypt.hash(password, salt);
-  return hash;
-};
-
 module.exports = {
   User,
 };
