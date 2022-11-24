@@ -57,7 +57,6 @@ const registerUser = async (req, res) => {
       .json({ message: `Registration successful`, user: user, token });
   } catch (e) {
     res.status(500).json({ error: 'Internal Server Error' });
-    console.log(e);
   }
 };
 
@@ -165,7 +164,6 @@ const userInfo = async (req, res) => {
     res.status(200).json({ success: true, payLoad });
   } catch (e) {
     res.status(500).json({ error: `Internal Server Error` });
-    console.log(e);
   }
 };
 
@@ -207,7 +205,6 @@ const forgotPassword = async (req, res) => {
     });
   } catch (e) {
     res.status(500).json({ error: `Internal Server Error` });
-    console.log(e);
   }
 };
 
@@ -261,7 +258,6 @@ const resetPassword = async (req, res) => {
     return payload;
   } catch (e) {
     res.status(500).json({ error: `Internal Server error` });
-    console.log(e);
   }
 };
 

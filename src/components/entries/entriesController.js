@@ -25,7 +25,6 @@ const postEntry = async (req, res) => {
     res.status(500).json({
       message: `Internal server error`,
     });
-    console.log(e);
   }
 };
 
@@ -48,7 +47,6 @@ const viewAllEntries = async (req, res) => {
       .json({ message: `All Entries`, total: data.length, Entries: data });
   } catch (e) {
     res.status(500).json({ message: `Internal server error` });
-    console.log(e);
   }
 };
 
@@ -90,7 +88,6 @@ const viewSingleEntry = async (req, res) => {
     res.status(500).json({
       message: `Internal server error`,
     });
-    console.log(error);
   }
 };
 
@@ -137,7 +134,6 @@ const modifyEntry = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ message: `Internal server error` });
-    console.log(error);
   }
 };
 
@@ -174,7 +170,6 @@ const deleteEntry = async (req, res) => {
     res.status(204).json({ message: `Successfully deleted entry` });
   } catch (err) {
     res.status(500).json({ message: `Internal server error` });
-    console.log(err);
   }
 };
 

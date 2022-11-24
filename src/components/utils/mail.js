@@ -29,7 +29,7 @@ const sendWelcomeEmail = async (email, name) => {
     });
     return info;
   } catch (e) {
-    console.log(e);
+    // console.log(e)
   }
 };
 
@@ -47,7 +47,7 @@ const sendGoodbyeEmail = async (email, name) => {
     });
     return info;
   } catch (e) {
-    console.log(e);
+    // console.log(e);
   }
 };
 
@@ -66,7 +66,7 @@ const sendResetPasswordEmail = async (email, link) => {
     });
     return info;
   } catch (e) {
-    console.log(e);
+    // console.log(e);
   }
 };
 const sendSuccessPasswordEmail = async (email, name) => {
@@ -80,7 +80,7 @@ const sendSuccessPasswordEmail = async (email, name) => {
     });
     return info;
   } catch (e) {
-    console.log(e);
+    // console.log(e);
   }
 };
 
