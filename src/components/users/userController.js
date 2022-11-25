@@ -124,7 +124,6 @@ const userProfile = async (req, res) => {
     res.status(200).json({ message: `My Profile`, user });
   } catch (error) {
     res.status(500).json({ error: `Internal server error` });
-    console.log(error);
   }
 };
 
@@ -151,7 +150,6 @@ const deleteAccount = async (req, res) => {
     res.status(204).json({ message: `Account deleted successfully` });
   } catch (error) {
     res.status(500).json({ error: `Internal Server Error` });
-    console.log(error);
   }
 };
 
