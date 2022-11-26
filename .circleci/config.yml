@@ -15,21 +15,19 @@
 #       - welcome/run
 version: 2.1
 orbs:
-  node: circleci/node@5.0.2
+  win: circleci/windows@5.0
 #   # heroku: circleci/heroku@1.2.6
 
 jobs:
   test:
-    docker:
-      - image: circleci/node:19.0
+    executor: win/server-2022
     steps:
       - checkout
       - run: echo "test application"
       - run: npm install
       - run: npm test
   coverage:
-    docker:
-      - image: circleci/node:18
+    executor: win/server-2022
     steps:
       - checkout
       - run: echo "test coverage"
@@ -40,7 +38,9 @@ workflows:
   test-coverage:
     jobs:
       - test
-      - coverage
+      - coverage:
+        requires:
+          - test
 
   # build:
   #   docker:
