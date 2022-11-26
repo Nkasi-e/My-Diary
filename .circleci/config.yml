@@ -1,3 +1,36 @@
+version: 2.1
+orbs:
+  win: circleci/windows@4.1.1
+#   # heroku: circleci/heroku@1.2.6
+
+jobs:
+  test:
+    executor:
+      name: win/default # executor type
+      size: medium
+
+    steps:
+      - checkout
+      - run: echo "test application"
+      - run: npm install
+      - run: npm test
+
+  coverage:
+    executor:
+      name: win/default # executor type
+      size: medium
+
+    steps:
+      - checkout
+      - run: echo "test coverage"
+      - run: npm install
+      - run: npm run coverage
+workflows:
+  version: 2.1
+  test_coverage:
+    jobs:
+      - test
+      - coverage
 # Use the latest 2.1 version of CircleCI pipeline processing engine, see https://circleci.com/docs/2.0/configuration-reference/
 # version: 2.1
 
@@ -13,45 +46,19 @@
 #     # Run the welcome/run job in its own container
 #     jobs:
 #       - welcome/run
-version: 2.1
-orbs:
-  win: circleci/windows@5.0
-#   # heroku: circleci/heroku@1.2.6
 
-jobs:
-  test:
-    executor: win/server-2022
-    steps:
-      - checkout
-      - run: echo "test application"
-      - run: npm install
-      - run: npm test
-  coverage:
-    executor: win/server-2022
-    steps:
-      - checkout
-      - run: echo "test coverage"
-      - run: npm install
-      - run: npm run coverage
-workflows:
-  version: 2.1
-  test-coverage:
-    jobs:
-      - test
-      - coverage
-
-  # build:
-  #   docker:
-  #     - image: circleci/node:19
-  #   steps:
-  #     - checkout
-  #     - run: echo "npm running build"
-  #     - run: npm install
-  #     - run: CI=true npm run build
-  # executor: node/default
-  # - node/install-packages:
-  #     install-npm: true
-  #     node-version: '19.0'
+# build:
+#   docker:
+#     - image: circleci/node:19
+#   steps:
+#     - checkout
+#     - run: echo "npm running build"
+#     - run: npm install
+#     - run: CI=true npm run build
+# executor: node/default
+# - node/install-packages:
+#     install-npm: true
+#     node-version: '19.0'
 #     steps:
 #       - checkout
 #           pkg-manager: npm
