@@ -48,9 +48,7 @@ workflows:
   test-coverage:
     jobs:
       - test
-      - coverage:
-        requires:
-          - test
+      - coverage
 
     # executor: node/default
     # - node/install-packages:
