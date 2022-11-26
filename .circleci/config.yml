@@ -19,14 +19,6 @@ orbs:
 #   # heroku: circleci/heroku@1.2.6
 
 jobs:
-  # build:
-  #   docker:
-  #     - image: circleci/node:19
-  #   steps:
-  #     - checkout
-  #     - run: echo "npm running build"
-  #     - run: npm install
-  #     - run: CI=true npm run build
   test:
     docker:
       - image: circleci/node:19.0
@@ -37,7 +29,7 @@ jobs:
       - run: npm test
   coverage:
     docker:
-      - image: circleci/node19.0
+      - image: circleci/node:18
     steps:
       - checkout
       - run: echo "test coverage"
@@ -50,10 +42,18 @@ workflows:
       - test
       - coverage
 
-    # executor: node/default
-    # - node/install-packages:
-    #     install-npm: true
-    #     node-version: '19.0'
+  # build:
+  #   docker:
+  #     - image: circleci/node:19
+  #   steps:
+  #     - checkout
+  #     - run: echo "npm running build"
+  #     - run: npm install
+  #     - run: CI=true npm run build
+  # executor: node/default
+  # - node/install-packages:
+  #     install-npm: true
+  #     node-version: '19.0'
 #     steps:
 #       - checkout
 #           pkg-manager: npm
