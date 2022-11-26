@@ -38,9 +38,7 @@ workflows:
   test-coverage:
     jobs:
       - test
-      - coverage:
-        requires:
-          - test
+      - coverage
 
   # build:
   #   docker:
