@@ -1,5 +1,6 @@
 version: 2.1
 orbs:
+  node: circleci/node@5.0.0
   win: circleci/windows@4.1.1
 #   # heroku: circleci/heroku@1.2.6
 
@@ -13,7 +14,7 @@ jobs:
       - checkout
       - run: echo "test application"
       - run: npm install
-      - run: CI=true npm test
+      - run: npm test
 
   coverage:
     executor:
