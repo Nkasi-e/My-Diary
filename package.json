@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node src/components/app.js",
     "dev": "env-cmd -f ./.env/.env nodemon src/components/app.js",
-    "test": "env-cmd -f ./.env/.env nyc --reporter=html --reporter=text --reporter=lcov mocha test/*",
-    "coverage":"nyc report --reporter=text-lcov | coveralls "
+    "test": "NODE_ENV=test env-cmd -f ./.env/.env nyc --reporter=html --reporter=text --reporter=lcov mocha test/*",
+    "coverage": "NODE_ENV=test nyc report --reporter=text-lcov | coveralls"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +16,7 @@
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.0",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "coveralls": "^3.1.1",
     "cross-env": "^7.0.3",
@@ -27,6 +28,7 @@
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^2.3.0",
+    "morgan": "^1.10.0",
     "nodemailer": "^6.8.0",
     "pg": "^8.8.0",
     "pg-hstore": "^2.3.4",

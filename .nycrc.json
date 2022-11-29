@@ -1,4 +1,5 @@
  {
+    "reporter": ["text", "text-summary", "lcov", "html"],
     "include": "src/components",
     "check-coverage": true,
     "report-dir":"./reports"
