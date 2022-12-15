@@ -38,18 +38,22 @@ jobs:
           PGHOST: 127.0.0.1
           PGUSER: demouser
           NODE_ENV: test
-      - image: circleci/postgres:9.6.2-alpine
+      - image: cimg/node:19.2.0
         environment:
           POSTGRES_DB: diaryApp
           POSTGRES_PASSWORD: ''
           POSTGRES_USER: demouser
     steps:
       - checkout
-      # - restore_cache:
-      # key:
-      #   - repo-npm-{{checksum "package.json"}}
-      #   - repo-npm-
+      - restore_cache:
+          key:
+            - repo-npm-{{ checksum "package.json" }}
+            - repo-npm-
       - run: npm install
+      - save_cache:
+          key: dependency-cache-server-{{ checksum "package.json" }}
+          paths:
+            - node_modules
       - run: node src/components/app.js
 workflows:
   version: 2.1
