@@ -19,7 +19,7 @@ jobs:
 
   coverage:
     executor:
-      node/node/default
+      node/default
       # name: win/default # executor type
       # size: medium
 
