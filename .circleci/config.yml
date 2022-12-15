@@ -45,10 +45,10 @@ jobs:
           POSTGRES_USER: demouser
     steps:
       - checkout
-      - restore_cache:
-          key:
-            - repo-npm-{{checksum "package.json"}}
-            - repo-npm-
+      # - restore_cache:
+      # key:
+      #   - repo-npm-{{checksum "package.json"}}
+      #   - repo-npm-
       - run: npm install
       - run: node src/components/app.js
 workflows:
