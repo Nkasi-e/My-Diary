@@ -52,7 +52,7 @@ jobs:
       - run: npm run coverage
 
   start-app:
-    working_directory: ~/diary-app/my-diary
+    # working_directory: ~/diary-app/my-diary
     docker:
       - image: cimg/node:19.2.0
         environment:
@@ -65,10 +65,10 @@ jobs:
           POSTGRES_PASSWORD: ''
           POSTGRES_USER: demouser
     steps:
-      - save_cache:
-          key: dependency-cache-server-{{ checksum "package.json" }}
-          paths:
-            - node_modules
+      # - save_cache:
+      #     key: dependency-cache-server-{{ checksum "package.json" }}
+      #     paths:
+      #       - node_modules
       - run: npm install
       # - checkout
       # - restore_cache:
