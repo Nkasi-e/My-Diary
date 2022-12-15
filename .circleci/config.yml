@@ -6,7 +6,7 @@ orbs:
 
 jobs:
   test:
-    working_directory: ~/my-diary
+    working_directory: ~/diary-app/my-diary
     executor: node/default
     docker:
       - image: cimg/node:19.2.0
@@ -29,7 +29,7 @@ jobs:
       - run: npm run test
 
   coverage:
-    working_directory: ~/my-diary
+    working_directory: ~/diary-app/my-diary
     executor: node/default
     docker:
       - image: cimg/node:19.2.0
@@ -52,7 +52,7 @@ jobs:
       - run: npm run coverage
 
   start-app:
-    working_directory: ~/my-diary
+    working_directory: ~/diary-app/my-diary
     docker:
       - image: cimg/node:19.2.0
         environment:
