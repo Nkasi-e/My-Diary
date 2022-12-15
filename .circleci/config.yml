@@ -1,25 +1,27 @@
 version: 2.1
 orbs:
-  node: circleci/node@5
+  node: circleci/node@5.0.2
   win: circleci/windows@4.1.1
 #   # heroku: circleci/heroku@1.2.6
 
 jobs:
   test:
     executor:
-      name: win/default # executor type
-      size: medium
+      node/default
+      # name: win/default # executor type
+      # size: medium
 
     steps:
       - checkout
       - run: echo "test application"
       - run: npm install
-      - run: npm run test:unit
+      # - run: npm run test
 
   coverage:
     executor:
-      name: win/default # executor type
-      size: medium
+      node/node/default
+      # name: win/default # executor type
+      # size: medium
 
     steps:
       - checkout
@@ -31,7 +33,9 @@ workflows:
   test_coverage:
     jobs:
       - test
-      - coverage
+      - coverage:
+          requires:
+            - test
 # Use the latest 2.1 version of CircleCI pipeline processing engine, see https://circleci.com/docs/2.0/configuration-reference/
 # version: 2.1
 
