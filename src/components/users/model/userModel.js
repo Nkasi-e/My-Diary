@@ -1,4 +1,4 @@
-const { sequelize } = require('sequelize');
+const { Sequelize } = require('sequelize');
 require('dotenv').config();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -8,16 +8,16 @@ const User = db.define(
   'user',
   {
     id: {
-      type: sequelize.INTEGER,
+      type: Sequelize.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },
     name: {
-      type: sequelize.STRING,
+      type: Sequelize.STRING,
       allowNull: false,
     },
     email: {
-      type: sequelize.STRING,
+      type: Sequelize.STRING,
       allowNull: false,
       unique: true,
       validate: {
@@ -25,7 +25,7 @@ const User = db.define(
       },
     },
     password: {
-      type: sequelize.STRING,
+      type: Sequelize.STRING,
       allowNull: false,
       // validate: {
       //   validatePassword: function (password) {
@@ -41,12 +41,13 @@ const User = db.define(
     },
     date: {
       type: 'TIMESTAMP',
-      defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       allowNull: false,
     },
   },
   {
     timestamps: false,
+    Sequelize: 'sequelize',
   }
 );
 

@@ -1,39 +1,40 @@
-const { sequelize } = require('sequelize');
+const { Sequelize } = require('Sequelize');
 const db = require('../../config/config');
 
 const Record = db.define(
   'records',
   {
     id: {
-      type: sequelize.BIGINT,
+      type: Sequelize.BIGINT,
       autoIncrement: true,
       primaryKey: true,
     },
     title: {
-      type: sequelize.STRING,
+      type: Sequelize.STRING,
       allowNull: false,
     },
     body: {
-      type: sequelize.STRING,
+      type: Sequelize.STRING,
       allowNull: false,
     },
     userid: {
-      type: sequelize.BIGINT,
+      type: Sequelize.BIGINT,
       // references: {
-      //   // Explicitly tells sequelize to create a foreign key relation with `Users`.`id`
+      //   // Explicitly tells Sequelize to create a foreign key relation with `Users`.`id`
       //   model: 'User',
       //   key: 'id',
       // },
       // field: 'id',
     },
     date: {
-      type: sequelize.DATE,
+      type: Sequelize.DATE,
       allowNull: false,
-      defaultValue: sequelize.NOW,
+      defaultValue: Sequelize.NOW,
     },
   },
   {
     timestamps: false,
+    Sequelize: 'sequelize',
   }
 );
 
