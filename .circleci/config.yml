@@ -82,10 +82,10 @@ workflows:
   version: 2.1
   test_coverage:
     jobs:
-      - start-app
-      - test:
-          requires:
-            - start-app
+      # - start-app
+      - test
+        # requires:
+        #   - start-app
       - coverage:
           requires:
             - test
