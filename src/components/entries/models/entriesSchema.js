@@ -34,6 +34,7 @@ const Record = db.define(
   },
   {
     timestamps: false,
+    Sequelize: 'sequelize',
   }
 );
 

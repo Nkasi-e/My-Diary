@@ -47,6 +47,7 @@ const User = db.define(
   },
   {
     timestamps: false,
+    Sequelize: 'sequelize',
   }
 );
 
