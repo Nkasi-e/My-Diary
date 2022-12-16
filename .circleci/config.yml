@@ -6,7 +6,7 @@ orbs:
 
 jobs:
   test:
-    working_directory: ~/diary-app/my-diary
+    working_directory: ~/repo
     executor: node/default
     docker:
       - image: cimg/node:19.2.0
@@ -27,6 +27,7 @@ jobs:
       - run: echo "test application"
       - run: npm install
       - run: npm run test
+          Path: ./env/.env
 
   coverage:
     working_directory: ~/diary-app/my-diary
