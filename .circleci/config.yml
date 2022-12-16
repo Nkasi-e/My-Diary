@@ -27,7 +27,7 @@ jobs:
       - run: echo "test application"
       - run: npm install
       - run: npm run test
-          Path: ./env/.env
+         
 
   coverage:
     working_directory: ~/diary-app/my-diary
