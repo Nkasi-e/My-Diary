@@ -26,8 +26,8 @@ jobs:
       - checkout
       - run: echo "test application"
       - run: npm install
-      - run: npm run test
-          Path: ./env/.env
+      - run: npm test:unit
+      # - run: npm run test
 
   coverage:
     working_directory: ~/diary-app/my-diary
@@ -50,7 +50,7 @@ jobs:
       - checkout
       - run: echo "test coverage"
       - run: npm install
-      - run: npm run coverage
+      # - run: npm run coverage
 
   # start-app:
   # working_directory: ~/diary-app/my-diary
