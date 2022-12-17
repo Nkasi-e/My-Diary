@@ -26,7 +26,6 @@ jobs:
       - checkout
       - run: echo "test application"
       - run: npm install
-      - run: npm start
       # - run: npm test:unit
       - run: npm run test
 
@@ -51,7 +50,7 @@ jobs:
       - checkout
       - run: echo "test coverage"
       - run: npm install
-      # - run: npm run coverage
+      - run: npm run coverage
 
   # start-app:
   # working_directory: ~/diary-app/my-diary
