@@ -25,7 +25,7 @@ jobs:
     steps:
       - checkout
       - run: echo "test application"
-      - run: npm install -g
+      - run: sudo npm install -g
       - run:
           command: |
             ./node_modules/mocha/bin/mocha test/ --reporter mochawesome --reporter-options reportDir=test-results, reportFilename=test-results
