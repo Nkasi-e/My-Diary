@@ -1,8 +1,9 @@
-const { Sequelize } = require('sequelize');
+const { sequelize } = require('sequelize');
 
 const { DATABASE, DB_USER, DB_PASSWORD } = process.env;
 
-module.exports = new Sequelize(DATABASE, DB_USER, DB_PASSWORD, {
+// eslint-disable-next-line new-cap
+module.exports = new sequelize(DATABASE, DB_USER, DB_PASSWORD, {
   host: 'localhost',
   dialect: 'postgres',
 
