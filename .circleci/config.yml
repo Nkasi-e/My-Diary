@@ -28,7 +28,7 @@ jobs:
       - run: sudo npm install -g
       - run:
           command: |
-            sudo npm i mocha@10.0.0 chai@latest chai-http@4.3.0 sequelize
+            sudo npm i mocha@10.0.0 chai@latest chai-http@4.3.0 sequelize@4.3.2 -g
             npm test
 
           # ./node_modules/mocha/bin/mocha test/ --reporter mochawesome --reporter-options reportDir=test-results, reportFilename=test-results
