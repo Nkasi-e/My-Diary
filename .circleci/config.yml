@@ -25,7 +25,7 @@ jobs:
     steps:
       - checkout
       - run: echo "test application"
-      - run: sudo npm install -g
+      - run: npm install
       - run: sudo npm install -g sequelize
       - run:
           command: |
