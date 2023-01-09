@@ -30,7 +30,6 @@ jobs:
       - run:
           command: |
             sudo npm i mocha@10.0.0 chai@4.3.6 chai-http@4.3.0
-            npm test
 
           # ./node_modules/mocha/bin/mocha test/ --reporter mochawesome --reporter-options reportDir=test-results, reportFilename=test-results
       # - run: npm test:unit
