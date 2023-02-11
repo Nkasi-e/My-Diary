@@ -1,6 +1,7 @@
 # DIARY API
 
 [![CircleCI](https://circleci.com/gh/tonyguesswho/Ecommerce-api/tree/develop.svg?style=shield&circle-token=bf272982b7397a8f6498ea69b44c0a5a507528fd)](https://circleci.com/gh/nkasi-e/My-Diary/tree/coverage) [![Coverage Status](https://coveralls.io/repos/github/Nkasi-e/My-Diary/badge.png?branch=coverage)](https://coveralls.io/github/Nkasi-e/My-Diary?branch=coverage?service=github)
+[![Dairy API](https://github.com/Nkasi-e/My-Diary/actions/workflows/build.yml/badge.svg)](https://github.com/Nkasi-e/My-Diary/actions/workflows/build.yml)
 
 ## _An Api that allows users to create, read and modify their diary logs_
 
