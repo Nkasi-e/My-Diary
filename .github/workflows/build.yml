@@ -40,3 +40,8 @@ jobs:
 
       - name: install dependencies
         run: npm install
+
+      - name: Run test
+        run: |
+          npm install mocha chai chai-http
+          npm run test:unit
