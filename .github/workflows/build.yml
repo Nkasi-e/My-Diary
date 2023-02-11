@@ -41,7 +41,7 @@ jobs:
       - name: install dependencies
         run: npm install
 
-      - name: Modify file system case sensitivity
+      # - name: Modify file system case sensitivity
       #   run: sudo mount -o remount,ignore_case /
 
       # - name: Run test
