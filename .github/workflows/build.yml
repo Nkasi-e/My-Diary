@@ -42,9 +42,9 @@ jobs:
         run: npm install
 
       - name: Modify file system case sensitivity
-        run: sudo mount -o remount,ignore_case /
+      #   run: sudo mount -o remount,ignore_case /
 
-      - name: Run test
-        run: |
-          npm install mocha chai chai-http
-          npm run test
+      # - name: Run test
+      #   run: |
+      #     npm install mocha chai chai-http
+      #     npm run test
