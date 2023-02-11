@@ -14,7 +14,7 @@ const Record = db.define(
       allowNull: false,
     },
     body: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(700),
       allowNull: false,
     },
     userid: {
