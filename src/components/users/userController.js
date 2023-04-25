@@ -259,6 +259,47 @@ const resetPassword = async (req, res) => {
   }
 };
 
+module.exports = async function socialAuth(req, res) {
+  const existingUser = await User.findOne({ where: { email: req.body.email } });
+  try {
+    if (existingUser) {
+      const { password } = req.body;
+
+      const match = await existingUser.comparePassword(
+        password,
+        existingUser.dataValues.password
+      );
+
+      if (match) {
+        res.redirect(
+          `http://localhost:3000/auth/social?token=${existingUser.createJWT(
+            existingUser.dataValues
+          )}&userId=${existingUser.id}`
+        );
+      } else {
+        res.redirect(`http://localhost:3000/auth/social?error=true`);
+      }
+    } else {
+      const hashPassword = await bcrypt.hash(req.body.password, 10);
+
+      User.create({
+        name: `${req.body.firstname}`,
+        email: `${req.body.email}`,
+        password: hashPassword,
+      });
+
+      res.redirect(
+        `http://localhost:300/auth/social?token=${existingUser.createToken(
+          existingUser.dataValues
+        )}&userId=${existingUser.id}`
+      );
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ message: `Internal Server Error` });
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
