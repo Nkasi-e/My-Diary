@@ -52,6 +52,14 @@ const port = process.env.PORT;
 app.use('/api/v1/diary', authMiddleware, entryRoute);
 app.use('/api/v1/user', userRoute);
 
+// app.use((err, req, res, next) => {
+//   if (err.status === 400) {
+//     res.status(400).redirect('/400');
+//   } else {
+//     next(err);
+//   }
+// });
+
 app.get(
   '/auth/google',
   passport.authenticate('google', { scope: ['profile', 'email'] })
@@ -59,12 +67,18 @@ app.get(
 
 app.get(
   '/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/error' }),
+  passport.authenticate('google', { failureRedirect: '/api/v1/user/login' }),
   function (req, res) {
     // Successful authentication, redirect success.
-    res.redirect('/success');
+    res.redirect('/');
   }
 );
+
+app.get('/', function (req, res) {
+  res.status(200).json({
+    message: 'Welcome to the Diary world',
+  });
+});
 
 app.listen(port, async () => {
   console.log(`server is running on port ${port}...`);
