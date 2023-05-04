@@ -11,7 +11,7 @@ const session = require('express-session');
 const swaggerUI = require('swagger-ui-express');
 const YAML = require('yamljs');
 const authMiddleware = require('./middleware/authentication');
-require('./middleware/googleAuth');
+require('./middleware/passport');
 
 const swaggerDocument = YAML.load('./swagger.yaml');
 
@@ -66,10 +66,23 @@ app.get(
 );
 
 app.get(
+  '/auth/facebook',
+  passport.authenticate('facebook', { scope: ['profile', 'email'] })
+);
+
+app.get(
   '/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/api/v1/user/login' }),
   function (req, res) {
     // Successful authentication, redirect success.
+    res.redirect('/');
+  }
+);
+
+app.get(
+  '/auth/facebook/callback',
+  passport.authenticate('facebook', { failureRedirect: '/api/v1/user/login' }),
+  (req, res) => {
     res.redirect('/');
   }
 );
