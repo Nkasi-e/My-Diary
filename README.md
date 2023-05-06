@@ -11,6 +11,7 @@
 - [x] Users can read a specific diary entry by ID from the database.
 - [x] Users can update diary entries.
 - [x] Users can delete diary entries.
+- [x] Users can create accout using just their gmail (Social authentication).
 
 <!-- - Note: The unchecked box means those particular feature are not ready yet but still under production or building.
 - More features may still be added to the `Diary API` as an update, until it is fully ready. -->
