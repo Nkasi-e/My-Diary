@@ -52,14 +52,6 @@ const port = process.env.PORT;
 app.use('/api/v1/diary', authMiddleware, entryRoute);
 app.use('/api/v1/user', userRoute);
 
-// app.use((err, req, res, next) => {
-//   if (err.status === 400) {
-//     res.status(400).redirect('/400');
-//   } else {
-//     next(err);
-//   }
-// });
-
 app.get(
   '/auth/google',
   passport.authenticate('google', { scope: ['profile', 'email'] })

@@ -15,7 +15,7 @@ const {
   sendSuccessPasswordEmail,
 } = require('../utils/mail');
 
-const { LINK_LIFETIME, JWT_SECRETE } = process.env;
+const { JWT_SECRETE } = process.env;
 
 /**
  * @description - Create/Register user controller
