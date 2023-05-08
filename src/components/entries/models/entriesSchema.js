@@ -1,4 +1,4 @@
-const { Sequelize } = require('Sequelize');
+const { Sequelize } = require('sequelize');
 const db = require('../../config/config');
 
 const Record = db.define(
@@ -19,12 +19,6 @@ const Record = db.define(
     },
     userid: {
       type: Sequelize.BIGINT,
-      // references: {
-      //   // Explicitly tells Sequelize to create a foreign key relation with `Users`.`id`
-      //   model: 'User',
-      //   key: 'id',
-      // },
-      // field: 'id',
     },
     date: {
       type: Sequelize.DATE,

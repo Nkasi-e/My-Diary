@@ -24,20 +24,6 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((user, done) => {
   done(null, user);
 });
-// passport.use(
-//   new GoogleStrategy(
-//     {
-//       clientID: CLIENT_ID,
-//       clientSecret: CLIENT_SECRET,
-//       callbackURL: `http://localhost:3000/auth/google/callback`,
-//       passReqToCallback: true,
-//     },
-//     // eslint-disable-next-line prefer-arrow-callback
-//     function (_request, _accessToken, _refreshToken, profile, done) {
-//       done(null, profile);
-//     }
-//   )
-// );
 
 passport.use(
   new GoogleStrategy(
